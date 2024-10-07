@@ -1,31 +1,6 @@
 {
     "profiles": [
         {
-            "complex_modifications": {
-                "rules": [
-                    {
-                        "description": "Ru dot",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "right_option",
-                                    "modifiers": {
-                                        "mandatory": [],
-                                        "optional": []
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "keypad_period",
-                                        "modifiers": ["left_shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    }
-                ]
-            },
             "name": "Kirill",
             "selected": true,
             "simple_modifications": [
@@ -35,14 +10,14 @@
                 },
                 {
                     "from": { "key_code": "right_command" },
-                    "to": [{ "key_code": "keypad_period" }]
-                },
-                {
-                    "from": { "key_code": "right_shift" },
                     "to": [
                         { "sticky_modifier": { "right_shift": "toggle" } },
                         { "key_code": "right_shift" }
                     ]
+                },
+                {
+                    "from": { "apple_vendor_top_case_key_code": "keyboard_fn" },
+                    "to": [{ "key_code": "vk_none" }]
                 }
             ],
             "virtual_hid_keyboard": {
