@@ -302,22 +302,6 @@
                         ]
                     },
                     {
-                        "description": "Ru sticky left shift",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "left_shift" },
-                                "to": [{ "sticky_modifier": { "left_shift": "toggle" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Ru  comma space",
                         "manipulators": [
                             {
