@@ -4,6 +4,304 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Caps -> fn",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "caps_lock" },
+                                "to": [{ "key_code": "fn" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Homerow numpad",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "0" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "1" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "2" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "3" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "u",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "7" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "i",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "8" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "o",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "9" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "m",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "4" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "period",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "5" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [{ "key_code": "6" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Swap nums and symbols",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "1" },
+                                "to": [
+                                    {
+                                        "key_code": "1",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "1",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "1" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "2" },
+                                "to": [
+                                    {
+                                        "key_code": "2",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "2",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "2" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "3" },
+                                "to": [
+                                    {
+                                        "key_code": "3",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "3",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "3" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "4" },
+                                "to": [
+                                    {
+                                        "key_code": "4",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "4",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "4" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "5" },
+                                "to": [
+                                    {
+                                        "key_code": "5",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "5",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "5" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "6" },
+                                "to": [
+                                    {
+                                        "key_code": "6",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "6",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "6" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "7" },
+                                "to": [
+                                    {
+                                        "key_code": "7",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "7",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "7" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "8" },
+                                "to": [
+                                    {
+                                        "key_code": "8",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "8",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "8" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "9" },
+                                "to": [
+                                    {
+                                        "key_code": "9",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "9",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "9" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "0" },
+                                "to": [
+                                    {
+                                        "key_code": "0",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "0",
+                                    "modifiers": { "mandatory": ["shift"] }
+                                },
+                                "to": [{ "key_code": "0" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Backspace word",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": { "mandatory": ["right_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_or_backspace",
+                                        "modifiers": ["option"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Ru sticky left shift",
                         "manipulators": [
                             {
@@ -37,34 +335,6 @@
                                     { "key_code": "keypad_period" },
                                     { "key_code": "spacebar" }
                                 ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Backspace word",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["right_shift"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "delete_or_backspace",
-                                        "modifiers": ["option"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Caps -> fn",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "caps_lock" },
-                                "to": [{ "key_code": "fn" }],
                                 "type": "basic"
                             }
                         ]
@@ -105,236 +375,6 @@
                             {
                                 "from": { "key_code": "right_option" },
                                 "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.Russian$" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 1 and !",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "1" },
-                                "to": [
-                                    {
-                                        "key_code": "1",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "1",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "1" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 2 and \"",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "2" },
-                                "to": [
-                                    {
-                                        "key_code": "2",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "2",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "2" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 3 and #",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "3" },
-                                "to": [
-                                    {
-                                        "key_code": "3",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "3",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "3" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 4 and sym",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "4" },
-                                "to": [
-                                    {
-                                        "key_code": "4",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "4",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "4" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 5 and %",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "5" },
-                                "to": [
-                                    {
-                                        "key_code": "5",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "5",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "5" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 6 and sym",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "6" },
-                                "to": [
-                                    {
-                                        "key_code": "6",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "6",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "6" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 7 and sym",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "7" },
-                                "to": [
-                                    {
-                                        "key_code": "7",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "7",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "7" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 8 and *",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "8" },
-                                "to": [
-                                    {
-                                        "key_code": "8",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "8",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "8" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 9 and sym",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "9" },
-                                "to": [
-                                    {
-                                        "key_code": "9",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "9",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "9" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Swap 0 and )",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "0" },
-                                "to": [
-                                    {
-                                        "key_code": "0",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "0",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "0" }],
                                 "type": "basic"
                             }
                         ]
