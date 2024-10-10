@@ -302,7 +302,7 @@
                         ]
                     },
                     {
-                        "description": "Ru  comma space",
+                        "description": "Ru comma space",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -317,6 +317,31 @@
                                 },
                                 "to": [
                                     { "key_code": "keypad_period" },
+                                    { "key_code": "spacebar" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ru dot space",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "ru" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": { "mandatory": ["fn"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "keypad_period",
+                                        "modifiers": ["shift"]
+                                    },
                                     { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
