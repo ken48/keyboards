@@ -302,7 +302,7 @@
                         ]
                     },
                     {
-                        "description": "Ru comma space",
+                        "description": "Ru: comma + space",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -324,7 +324,7 @@
                         ]
                     },
                     {
-                        "description": "Ru dot space",
+                        "description": "Ru: dot + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -342,7 +342,8 @@
                                         "key_code": "keypad_period",
                                         "modifiers": ["shift"]
                                     },
-                                    { "key_code": "spacebar" }
+                                    { "key_code": "spacebar" },
+                                    { "sticky_modifier": { "left_shift": "on" } }
                                 ],
                                 "type": "basic"
                             }
