@@ -82,7 +82,7 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "period",
+                                    "key_code": "comma",
                                     "modifiers": { "mandatory": ["fn"] }
                                 },
                                 "to": [{ "key_code": "5" }],
@@ -90,7 +90,7 @@
                             },
                             {
                                 "from": {
-                                    "key_code": "comma",
+                                    "key_code": "period",
                                     "modifiers": { "mandatory": ["fn"] }
                                 },
                                 "to": [{ "key_code": "6" }],
