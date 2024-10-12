@@ -521,7 +521,8 @@
                                 ],
                                 "from": {
                                     "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["fn"] }
+                                    "modifiers": { "mandatory": ["fn"],
+                                    "optional": ["any"] }
                                 },
                                 "to": [
                                     {
