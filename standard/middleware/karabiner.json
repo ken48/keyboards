@@ -470,12 +470,15 @@
                         ]
                     },
                     {
-                        "description": "Backspace word",
+                        "description": "Backspace on space",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["right_shift"] }
+                                    "modifiers": {
+                                        "mandatory": ["right_shift"],
+                                        "optional": ["any"]
+                                    }
                                 },
                                 "to": [
                                     {
@@ -483,6 +486,17 @@
                                         "modifiers": ["option"]
                                     }
                                 ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "delete_or_backspace" }],
                                 "type": "basic"
                             }
                         ]
@@ -521,8 +535,10 @@
                                 ],
                                 "from": {
                                     "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["fn"],
-                                    "optional": ["any"] }
+                                    "modifiers": {
+                                        "mandatory": ["fn"],
+                                        "optional": ["any"]
+                                    }
                                 },
                                 "to": [
                                     {
