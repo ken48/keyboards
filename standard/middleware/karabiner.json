@@ -13,14 +13,6 @@
                                 },
                                 "to": [{ "sticky_modifier": { "left_shift": "on" } }],
                                 "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "right_command",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "left_shift" }],
-                                "type": "basic"
                             }
                         ]
                     },
@@ -322,6 +314,17 @@
                                         "modifiers": ["option"]
                                     }
                                 ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "delete_or_backspace" }],
                                 "type": "basic"
                             }
                         ]
