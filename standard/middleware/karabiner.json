@@ -4,19 +4,6 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Shifts",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "left_shift",
-                                    "modifiers": {}
-                                },
-                                "to": [{ "sticky_modifier": { "left_shift": "on" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Nums + fn F-row",
                         "manipulators": [
                             {
