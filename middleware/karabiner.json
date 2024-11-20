@@ -4,19 +4,6 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Shifts",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "left_shift",
-                                    "modifiers": {}
-                                },
-                                "to": [{ "sticky_modifier": { "left_shift": "on" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Nums + fn F-row",
                         "manipulators": [
                             {
@@ -298,13 +285,13 @@
                         ]
                     },
                     {
-                        "description": "Backspace on space",
+                        "description": "Backspace word on shift + bspace",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "spacebar",
+                                    "key_code": "delete_or_backspace",
                                     "modifiers": {
-                                        "mandatory": ["right_shift"],
+                                        "mandatory": ["shift"],
                                         "optional": ["any"]
                                     }
                                 },
@@ -314,17 +301,6 @@
                                         "modifiers": ["option"]
                                     }
                                 ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": ["right_command"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "delete_or_backspace" }],
                                 "type": "basic"
                             }
                         ]
@@ -341,8 +317,27 @@
                                 ],
                                 "from": {
                                     "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["left_shift"] }
+                                    "modifiers": { "mandatory": ["right_command"] }
                                 },
+                                "to": [
+                                    { "key_code": "keypad_period" },
+                                    { "key_code": "spacebar" }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ru: comma + space SOFLE",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "ru" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": { "key_code": "f17" },
                                 "to": [
                                     { "key_code": "keypad_period" },
                                     { "key_code": "spacebar" }
@@ -364,7 +359,36 @@
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": {
-                                        "mandatory": ["fn"],
+                                        "mandatory": ["right_command", "shift"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "keypad_period",
+                                        "modifiers": ["shift"]
+                                    },
+                                    { "key_code": "spacebar" },
+                                    { "sticky_modifier": { "left_shift": "on" } }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Ru: dot + space + sticky shift SOFLE",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "ru" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f17",
+                                    "modifiers": {
+                                        "mandatory": ["shift"],
                                         "optional": ["any"]
                                     }
                                 },
