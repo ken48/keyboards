@@ -306,7 +306,7 @@
                         ]
                     },
                     {
-                        "description": "Ru: comma + space",
+                        "description": "comma + space",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -324,11 +324,28 @@
                                     { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": { "mandatory": ["right_command"] }
+                                },
+                                "to": [
+                                    { "key_code": "comma" },
+                                    { "key_code": "spacebar" }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "Ru: comma + space SOFLE",
+                        "description": "F17: comma + space",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -343,11 +360,25 @@
                                     { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": { "key_code": "f17" },
+                                "to": [
+                                    { "key_code": "comma" },
+                                    { "key_code": "spacebar" }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "Ru: dot + space + sticky shift",
+                        "description": "dot + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -372,11 +403,32 @@
                                     { "sticky_modifier": { "left_shift": "on" } }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["right_command", "shift"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    { "key_code": "period" },
+                                    { "key_code": "spacebar" },
+                                    { "sticky_modifier": { "left_shift": "on" } }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "Ru: dot + space + sticky shift SOFLE",
+                        "description": "F17: dot + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -397,6 +449,27 @@
                                         "key_code": "keypad_period",
                                         "modifiers": ["shift"]
                                     },
+                                    { "key_code": "spacebar" },
+                                    { "sticky_modifier": { "left_shift": "on" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "f17",
+                                    "modifiers": {
+                                        "mandatory": ["shift"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    { "key_code": "period" },
                                     { "key_code": "spacebar" },
                                     { "sticky_modifier": { "left_shift": "on" } }
                                 ],
