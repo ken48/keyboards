@@ -4,6 +4,19 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "r_cmd = bspace",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_command",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": { "key_code": "delete_or_backspace" },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Nums + fn F-row",
                         "manipulators": [
                             {
@@ -122,7 +135,10 @@
                         "description": "Caps -> fn",
                         "manipulators": [
                             {
-                                "from": { "key_code": "caps_lock" },
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
                                 "to": [{ "key_code": "fn" }],
                                 "type": "basic"
                             }
@@ -285,22 +301,27 @@
                         ]
                     },
                     {
-                        "description": "Backspace word on shift + bspace",
+                        "description": "fn + space = enter",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "delete_or_backspace",
+                                    "key_code": "spacebar",
                                     "modifiers": {
-                                        "mandatory": ["shift"],
+                                        "mandatory": ["fn"],
                                         "optional": ["any"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "key_code": "delete_or_backspace",
-                                        "modifiers": ["option"]
+                                        "key_code": "return_or_enter",
+                                        "modifiers": []
                                     }
                                 ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": { "key_code": "return_or_enter" },
+                                "to": [{ "key_code": "vk_none" }],
                                 "type": "basic"
                             }
                         ]
