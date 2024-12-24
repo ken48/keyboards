@@ -288,8 +288,21 @@
                         ]
                     },
                     {
-                        "description": "fn + space = enter",
+                        "description": "enter + space = enter",
                         "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "return_or_enter",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "fn",
+                                        "modifiers": []
+                                    }
+                                ],
+                                "type": "basic"
+                            },
                             {
                                 "from": {
                                     "key_code": "spacebar",
@@ -304,11 +317,6 @@
                                         "modifiers": []
                                     }
                                 ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": { "key_code": "return_or_enter" },
-                                "to": [{ "key_code": "vk_none" }],
                                 "type": "basic"
                             }
                         ]
