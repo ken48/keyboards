@@ -288,40 +288,6 @@
                         ]
                     },
                     {
-                        "description": "enter + space = enter",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "return_or_enter",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "fn",
-                                        "modifiers": []
-                                    }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "return_or_enter",
-                                        "modifiers": []
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "comma + space",
                         "manipulators": [
                             {
@@ -494,41 +460,24 @@
                         ]
                     },
                     {
-                        "description": "F18 -> En",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "f18" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.ABC$" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "F19 -> Ru",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "f19" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.Russian$" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "fn -> En",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "fn" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.ABC$" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "ropt -> RU",
+                        "description": "ropt -> switch lang",
                         "manipulators": [
                             {
                                 "from": { "key_code": "right_option" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.Russian$" } }],
+                                "to": {
+                                    "key_code": "spacebar",
+                                    "modifiers": ["left_control"]
+                                },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "fn -> ctrl",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "fn" },
+                                "to": [{ "key_code": "left_control" }],
                                 "type": "basic"
                             }
                         ]
