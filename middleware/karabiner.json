@@ -380,45 +380,14 @@
                         ]
                     },
                     {
-                        "description": "iso ` -> comma/dot",
+                        "description": "disable iso `",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "grave_accent_and_tilde",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "keypad_period" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "grave_accent_and_tilde" },
-                                "to": [{ "key_code": "comma" }],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "mandatory": ["shift"] }
-                                },
-                                "to": [{ "key_code": "period" }],
+                                "to": [{ "key_code": "vk_none" }],
                                 "type": "basic"
                             }
                         ]
