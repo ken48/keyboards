@@ -4,19 +4,40 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "lshift + del -> alt + del",
+                        "description": "rctl -> =",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "delete_forward",
-                                    "modifiers": { "mandatory": ["left_shift"] }
+                                    "key_code": "right_control",
+                                    "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [
-                                    {
-                                        "key_code": "delete_forward",
-                                        "modifiers": ["left_alt"]
-                                    }
-                                ],
+                                "to": [{ "key_code": "equal_sign" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "ropt -> -",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "hyphen" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Caps -> fn",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "fn" }],
                                 "type": "basic"
                             }
                         ]
@@ -32,6 +53,42 @@
                                 "to": [
                                     {
                                         "key_code": "delete_or_backspace",
+                                        "modifiers": ["left_alt"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "lshift + caps + backspace -> alt + del",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": { "mandatory": ["left_shift", "fn"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_forward",
+                                        "modifiers": ["left_alt"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "lshift + del -> alt + del",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_forward",
+                                    "modifiers": { "mandatory": ["left_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_forward",
                                         "modifiers": ["left_alt"]
                                     }
                                 ],
@@ -155,19 +212,6 @@
                         ]
                     },
                     {
-                        "description": "Caps -> fn",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "fn" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "rcmd + space -> comma + space",
                         "manipulators": [
                             {
@@ -240,7 +284,7 @@
                         ]
                     },
                     {
-                        "description": "shift + rcmd + space -> dot + space + sticky shift",
+                        "description": "rcmd + space + shift -> dot + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -290,7 +334,7 @@
                         ]
                     },
                     {
-                        "description": "F17 -> dot + space + sticky shift",
+                        "description": "F17 + shift -> dot + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [

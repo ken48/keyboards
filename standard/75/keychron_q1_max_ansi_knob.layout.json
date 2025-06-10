@@ -1,24 +1,7 @@
 {
   "name": "Keychron Q1 Max ANSI Knob",
   "vendorProductId": 875825168,
-  "macros": [
-    "{+KC_LGUI}{+KC_LCTL}{+KC_Q}{-KC_LGUI}{-KC_LCTL}",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ],
+  "macros": ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
   "layers": [
     [
       "KC_ESC",
@@ -34,7 +17,7 @@
       "KC_F10",
       "KC_F11",
       "KC_F12",
-      "MACRO(0)",
+      "MO(1)",
       "KC_MUTE",
       "KC_NUBS",
       "KC_1",
@@ -106,7 +89,7 @@
       "KC_NO",
       "KC_NO",
       "CUSTOM(3)",
-      "MO(1)",
+      "CUSTOM(1)",
       "KC_RCTL",
       "KC_LEFT",
       "KC_DOWN",
