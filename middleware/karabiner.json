@@ -4,6 +4,24 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "lcmd + lsft -> ctrl + space",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_command",
+                                    "modifiers": { "mandatory": ["left_shift"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "rctl -> =",
                         "manipulators": [
                             {
