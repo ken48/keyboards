@@ -4,32 +4,6 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "rctl -> =",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "right_control",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "equal_sign" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "ropt -> -",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "right_option",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "hyphen" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "Caps -> fn",
                         "manipulators": [
                             {
@@ -38,6 +12,55 @@
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "key_code": "fn" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "fn + backspace -> del",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": {
+                                        "mandatory": ["fn"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "delete_forward" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "ropt -> -",
+                        "manipulators": [
+                            {
+                                "from": { "key_code": "right_option" },
+                                "to": [
+                                    {
+                                        "key_code": "hyphen",
+                                        "modifiers": ["any"]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "rcmd + backspace -> lctl + space",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "delete_or_backspace",
+                                    "modifiers": { "mandatory": ["right_command"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control"]
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
@@ -53,24 +76,6 @@
                                 "to": [
                                     {
                                         "key_code": "delete_or_backspace",
-                                        "modifiers": ["left_alt"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "lshift + caps + backspace -> alt + del",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "delete_or_backspace",
-                                    "modifiers": { "mandatory": ["left_shift", "fn"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "delete_forward",
                                         "modifiers": ["left_alt"]
                                     }
                                 ],
@@ -97,121 +102,6 @@
                         ]
                     },
                     {
-                        "description": "Nums + fn F-row",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "1",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f1" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "2",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f2" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "3",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f3" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "4",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f4" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "5",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f5" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "6",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f6" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "7",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f7" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "8",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f8" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "9",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f9" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "0",
-                                    "modifiers": {
-                                        "mandatory": ["fn"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "f10" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
                         "description": "rcmd + space -> comma + space",
                         "manipulators": [
                             {
@@ -227,56 +117,6 @@
                                 },
                                 "to": [
                                     { "key_code": "keypad_period" },
-                                    { "key_code": "spacebar" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["right_command"] }
-                                },
-                                "to": [
-                                    { "key_code": "comma" },
-                                    { "key_code": "spacebar" }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "F17 -> comma + space",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "f17" },
-                                "to": [
-                                    { "key_code": "keypad_period" },
-                                    { "key_code": "spacebar" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": { "key_code": "f17" },
-                                "to": [
-                                    { "key_code": "comma" },
                                     { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
@@ -306,78 +146,7 @@
                                         "modifiers": ["shift"]
                                     },
                                     { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "left_shift": "on" } }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": ["right_command", "shift"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    { "key_code": "period" },
-                                    { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "left_shift": "on" } }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "F17 + shift -> dot + space + sticky shift",
-                        "manipulators": [
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "f17",
-                                    "modifiers": {
-                                        "mandatory": ["shift"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "keypad_period",
-                                        "modifiers": ["shift"]
-                                    },
-                                    { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "left_shift": "on" } }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "f17",
-                                    "modifiers": {
-                                        "mandatory": ["shift"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    { "key_code": "period" },
-                                    { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "left_shift": "on" } }
+                                    { "sticky_modifier": { "right_shift": "on" } }
                                 ],
                                 "type": "basic"
                             }
@@ -389,26 +158,6 @@
                             {
                                 "from": { "key_code": "fn" },
                                 "to": [{ "key_code": "left_control" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "F18 -> En",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "f18" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.ABC$" } }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "F19 -> Ru",
-                        "manipulators": [
-                            {
-                                "from": { "key_code": "f19" },
-                                "to": [{ "select_input_source": { "input_source_id": "^com\\.apple\\.keylayout\\.Russian$" } }],
                                 "type": "basic"
                             }
                         ]
