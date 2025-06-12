@@ -102,7 +102,7 @@
                         ]
                     },
                     {
-                        "description": "rcmd + space -> comma + space",
+                        "description": "rcmd + space -> , + space",
                         "manipulators": [
                             {
                                 "conditions": [
@@ -124,7 +124,7 @@
                         ]
                     },
                     {
-                        "description": "rcmd + space + shift -> dot + space + sticky shift",
+                        "description": "rcmd + space + shift -> . + space + sticky shift",
                         "manipulators": [
                             {
                                 "conditions": [
