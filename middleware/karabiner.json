@@ -36,13 +36,24 @@
                         "description": "ropt -> -",
                         "manipulators": [
                             {
-                                "from": { "key_code": "right_option" },
-                                "to": [
-                                    {
-                                        "key_code": "hyphen",
-                                        "modifiers": ["any"]
-                                    }
-                                ],
+                                "from": {
+                                    "key_code": "right_option",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "hyphen" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "rctl -> =",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_control",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "equal_sign" }],
                                 "type": "basic"
                             }
                         ]
@@ -120,6 +131,23 @@
                                     { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": { "mandatory": ["right_command"] }
+                                },
+                                "to": [
+                                    { "key_code": "comma" },
+                                    { "key_code": "spacebar" }
+                                ],
+                                "type": "basic"
                             }
                         ]
                     },
@@ -144,6 +172,30 @@
                                     {
                                         "key_code": "keypad_period",
                                         "modifiers": ["shift"]
+                                    },
+                                    { "key_code": "spacebar" },
+                                    { "sticky_modifier": { "right_shift": "on" } }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "input_sources": [{ "language": "en" }],
+                                        "type": "input_source_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": ["right_command", "shift"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "period",
+                                        "modifiers": []
                                     },
                                     { "key_code": "spacebar" },
                                     { "sticky_modifier": { "right_shift": "on" } }
