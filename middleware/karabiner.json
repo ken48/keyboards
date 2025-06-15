@@ -225,14 +225,14 @@
                         ]
                     },
                     {
-                        "description": "disable iso `",
+                        "description": "iso ` -> z",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "grave_accent_and_tilde",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "vk_none" }],
+                                "to": [{ "key_code": "z" }],
                                 "type": "basic"
                             }
                         ]
