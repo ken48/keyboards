@@ -4,11 +4,24 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Caps -> fn",
+                        "description": "disable caps lock",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "caps_lock",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "vk_none" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "ropt -> fn",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_option",
                                     "modifiers": { "optional": ["any"] }
                                 },
                                 "to": [{ "key_code": "fn" }],
@@ -124,19 +137,6 @@
                     {
                         "description": "rcmd multilang symbols",
                         "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "m",
-                                    "modifiers": { "mandatory": ["right_command"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "1",
-                                        "modifiers": ["shift"]
-                                    }
-                                ],
-                                "type": "basic"
-                            },
                             {
                                 "conditions": [
                                     {
@@ -288,18 +288,18 @@
                                     }
                                 ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "ropt -> del",
-                        "manipulators": [
+                            },
                             {
                                 "from": {
-                                    "key_code": "right_option",
-                                    "modifiers": { "optional": ["any"] }
+                                    "key_code": "m",
+                                    "modifiers": { "mandatory": ["right_command"] }
                                 },
-                                "to": [{ "key_code": "delete_forward" }],
+                                "to": [
+                                    {
+                                        "key_code": "1",
+                                        "modifiers": ["shift"]
+                                    }
+                                ],
                                 "type": "basic"
                             }
                         ]
@@ -325,7 +325,7 @@
                         ]
                     },
                     {
-                        "description": "iso ` -> z",
+                        "description": "ISO ` -> z",
                         "manipulators": [
                             {
                                 "from": {
