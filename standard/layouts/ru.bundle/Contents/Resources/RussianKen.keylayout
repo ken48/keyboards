@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
 <!--ken mac ru layout&#x000A;-->
-<!--Last edited by Ukelele version 442 on 2025-06-22 at 22:15 (GMT+3)-->
-<keyboard group="126" id="-22063" name="RussianKen" maxout="1">
+<!--Last edited by Ukelele version 442 on 2025-06-22 at 22:59 (GMT+3)-->
+<keyboard group="126" id="-28760" name="RussianKen" maxout="1">
     <layouts>
         <layout first="0" last="0" mapSet="a8" modifiers="30"/>
     </layouts>
@@ -370,7 +370,7 @@
             <key code="9" output=""/>
             <key code="10" output=""/>
             <key code="11" output=""/>
-            <key code="12" output=""/>
+            <key code="12" output="`"/>
             <key code="13" output=""/>
             <key code="14" output=""/>
             <key code="15" output=""/>
@@ -383,17 +383,17 @@
             <key code="22" output="^"/>
             <key code="23" output="%"/>
             <key code="24" output=""/>
-            <key code="25" output="-"/>
+            <key code="25" output="("/>
             <key code="26" output="&#x0026;"/>
             <key code="27" output=""/>
             <key code="28" output="*"/>
-            <key code="29" output="="/>
+            <key code="29" output=")"/>
             <key code="30" output="]"/>
-            <key code="31" output=""/>
+            <key code="31" output="-"/>
             <key code="32" output=""/>
             <key code="33" output="["/>
             <key code="34" output=""/>
-            <key code="35" output=""/>
+            <key code="35" output="="/>
             <key code="36" output="&#x000D;"/>
             <key code="37" output=""/>
             <key code="38" output=""/>
@@ -481,7 +481,7 @@
             <key code="9" output=""/>
             <key code="10" output=""/>
             <key code="11" output=""/>
-            <key code="12" output=""/>
+            <key code="12" output="~"/>
             <key code="13" output=""/>
             <key code="14" output=""/>
             <key code="15" output=""/>
@@ -494,17 +494,17 @@
             <key code="22" output=""/>
             <key code="23" output=""/>
             <key code="24" output=""/>
-            <key code="25" output="_"/>
+            <key code="25" output=""/>
             <key code="26" output=""/>
             <key code="27" output=""/>
             <key code="28" output=""/>
-            <key code="29" output="+"/>
+            <key code="29" output=""/>
             <key code="30" output="}"/>
-            <key code="31" output=""/>
+            <key code="31" output="_"/>
             <key code="32" output=""/>
             <key code="33" output="{"/>
             <key code="34" output=""/>
-            <key code="35" output=""/>
+            <key code="35" output="+"/>
             <key code="36" output="&#x000D;"/>
             <key code="37" output=""/>
             <key code="38" output=""/>
