@@ -4,14 +4,14 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "caps lock -> none",
+                        "description": "caps lock -> fn",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "caps_lock",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "vk_none" }],
+                                "to": [{ "key_code": "fn" }],
                                 "type": "basic"
                             }
                         ]
@@ -20,21 +20,11 @@
                         "description": "fn -> ctrl",
                         "manipulators": [
                             {
-                                "from": { "key_code": "fn" },
-                                "to": [{ "key_code": "left_control" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "ropt -> fn",
-                        "manipulators": [
-                            {
                                 "from": {
-                                    "key_code": "right_option",
+                                    "key_code": "fn",
                                     "modifiers": { "optional": ["any"] }
                                 },
-                                "to": [{ "key_code": "fn" }],
+                                "to": [{ "key_code": "left_control" }],
                                 "type": "basic"
                             }
                         ]
@@ -152,6 +142,24 @@
                                     },
                                     { "key_code": "spacebar" },
                                     { "sticky_modifier": { "right_shift": "on" } }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "rcmd + rshift -> ctrl + space",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "right_shift",
+                                    "modifiers": { "mandatory": ["right_command"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": ["left_control"]
+                                    }
                                 ],
                                 "type": "basic"
                             }
