@@ -3,19 +3,19 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.sil.ukelele.keyboardlayout.ruwithensymbols</string>
+	<string>org.sil.ukelele.keyboardlayout.ru_en</string>
 	<key>CFBundleName</key>
-	<string>RuWithEnSymbols</string>
+	<string>Ru+En</string>
 	<key>CFBundleVersion</key>
 	<string></string>
-	<key>KLInfo_RuWithEnSymbols</key>
+	<key>KLInfo_Ru+En</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout.ruwithensymbols.ruwithensymbols</string>
+		<string>org.sil.ukelele.keyboardlayout.ru_en</string>
 		<key>TISIntendedLanguage</key>
 		<string>ru</string>
 	</dict>
