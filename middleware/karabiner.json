@@ -130,7 +130,7 @@
                         ]
                     },
                     {
-                        "description": "lshift + backspace -> alt + backspace",
+                        "description": "delete word with shift",
                         "manipulators": [
                             {
                                 "from": {
@@ -144,34 +144,16 @@
                                     }
                                 ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "sofle macros",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "q",
-                                    "modifiers": { "mandatory": ["left_shift", "left_command"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "q",
-                                        "modifiers": ["left_control", "left_command"]
-                                    }
-                                ],
-                                "type": "basic"
                             },
                             {
                                 "from": {
-                                    "key_code": "e",
-                                    "modifiers": { "mandatory": ["left_shift", "left_command"] }
+                                    "key_code": "delete_forward",
+                                    "modifiers": { "mandatory": ["left_shift"] }
                                 },
                                 "to": [
                                     {
-                                        "key_code": "escape",
-                                        "modifiers": ["left_alt", "left_command"]
+                                        "key_code": "delete_forward",
+                                        "modifiers": ["left_alt"]
                                     }
                                 ],
                                 "type": "basic"
