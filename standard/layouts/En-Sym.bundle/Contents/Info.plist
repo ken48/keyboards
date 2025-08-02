@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.sil.ukelele.keyboardlayout.ru_en</string>
+	<string>org.sil.ukelele.keyboardlayout.en-sym</string>
 	<key>CFBundleName</key>
-	<string>Ru+En</string>
+	<string>En-Sym</string>
 	<key>CFBundleVersion</key>
 	<string></string>
-	<key>KLInfo_Ru+En</key>
+	<key>KLInfo_En-Sym</key>
 	<dict>
 		<key>TICapsLockLanguageSwitchCapable</key>
 		<false/>
 		<key>TISIconIsTemplate</key>
 		<false/>
 		<key>TISInputSourceID</key>
-		<string>org.sil.ukelele.keyboardlayout.ru_en</string>
+		<string>org.sil.ukelele.keyboardlayout.en-sym.en-sym</string>
 		<key>TISIntendedLanguage</key>
-		<string>ru</string>
+		<string>en</string>
 	</dict>
 </dict>
 </plist>
