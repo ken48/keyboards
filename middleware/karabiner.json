@@ -161,16 +161,29 @@
                         ]
                     },
                     {
-                        "description": "backspace with alt+[",
+                        "description": "backspace at sym layer",
                         "manipulators": [
                             {
                                 "from": {
-                                    "key_code": "open_bracket",
+                                    "key_code": "equal_sign",
                                     "modifiers": { "mandatory": ["option"] }
                                 },
                                 "to": [
                                     {
                                         "key_code": "delete_or_backspace",
+                                        "modifiers": []
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "non_us_backslash",
+                                    "modifiers": { "mandatory": ["option"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_forward",
                                         "modifiers": []
                                     }
                                 ],
