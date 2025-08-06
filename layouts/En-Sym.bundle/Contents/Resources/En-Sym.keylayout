@@ -370,24 +370,24 @@
             <key code="126" output="&#x001E;"/>
         </keyMap>
         <keyMap index="3">
-            <key code="0" output="("/>
+             <key code="0" output="#"/>
             <key code="1" output="{"/>
-            <key code="2" output="!"/>
+            <key code="2" output=";"/>
             <key code="3" output="}"/>
-            <key code="4" output="_"/>
-            <key code="5" output=")"/>
+            <key code="4" output="+"/>
+            <key code="5" output="="/>
             <key code="6" output="^"/>
-            <key code="7" output="["/>
-            <key code="8" output="`"/>
-            <key code="9" output="]"/>
+            <key code="7" output="&#x003C;"/>
+            <key code="8" output="/"/>
+            <key code="9" output="&#x003E;"/>
             <key code="10" output=""/>
             <key code="11" output="&#x0026;"/>
-            <key code="12" output="#"/>
-            <key code="13" output="@"/>
+            <key code="12" output="&#x0027;"/>
+            <key code="13" output="["/>
             <key code="14" output="*"/>
-            <key code="15" output="$"/>
-            <key code="16" output=";"/>
-            <key code="17" output="%"/>
+            <key code="15" output="]"/>
+            <key code="16" output=":"/>
+            <key code="17" output=";"/>
             <key code="18" output=""/>
             <key code="19" output=""/>
             <key code="20" output=""/>
@@ -401,22 +401,22 @@
             <key code="28" output=""/>
             <key code="29" output=""/>
             <key code="30" output=""/>
-            <key code="31" output="&#x0027;"/>
-            <key code="32" output=":"/>
-            <key code="33" output=""/>
+            <key code="31" output=")"/>
+            <key code="32" output="("/>
+            <key code="33" output="~"/>
             <key code="34" output="&#x0022;"/>
-            <key code="35" output="|"/>
+            <key code="35" output="\"/>
             <key code="36" output="&#x000D;"/>
-            <key code="37" output="+"/>
+            <key code="37" output="/"/>
             <key code="38" output="-"/>
-            <key code="39" output="~"/>
-            <key code="40" output="="/>
-            <key code="41" output="\"/>
+            <key code="39" output="`"/>
+            <key code="40" output="_"/>
+            <key code="41" output="%"/>
             <key code="42" output=""/>
             <key code="43" output=","/>
             <key code="44" output="?"/>
-            <key code="45" output="&#x003C;"/>
-            <key code="46" output="&#x003E;"/>
+            <key code="45" output="|"/>
+            <key code="46" output="!"/>
             <key code="47" output="."/>
             <key code="48" output="&#x0009;"/>
             <key code="49" output=" "/>
