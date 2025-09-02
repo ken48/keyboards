@@ -77,19 +77,18 @@ def main():
                 if process.returncode == 0:
                     run_keystroke(KEYSTROKE_PASTE)
                     print("Success! Text transformed and pasted.")
-
-                    restore_process = subprocess.run(['pbcopy'], input=original_clipboard_content, text=True)
-                    if restore_process.returncode == 0:
-                        print("Original clipboard content restored")
-                    else:
-                        print("Failed to restore original clipboard content")
-
                 else:
                     print("Failed to copy to clipboard")
         else:
             print("Failed to get text from clipboard")
     except Exception as e:
         print(f"Error: {e}")
+
+    restore_process = subprocess.run(['pbcopy'], input=original_clipboard_content, text=True)
+    if restore_process.returncode == 0:
+        print("Original clipboard content restored")
+    else:
+        print("Failed to restore original clipboard content")
 
 if __name__ == "__main__":
     main()
