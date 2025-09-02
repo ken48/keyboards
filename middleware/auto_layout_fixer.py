@@ -32,7 +32,6 @@ def fix_keyboard_layout(text, direction=None):
         'i': 'ш',
         'o': 'з',
         'p': 'э',
-        '[': 'х',
         ']': 'ъ',
         'a': 'ф',
         's': 'ы',
@@ -53,8 +52,7 @@ def fix_keyboard_layout(text, direction=None):
         'm': 'ь',
         ',': 'б',
         '.': 'ю',
-        '/': 'x',
-        '`': 'ё',
+        '/': 'х',
         'Q': 'Й',
         'W': 'Ц',
         'E': 'У',
@@ -65,8 +63,6 @@ def fix_keyboard_layout(text, direction=None):
         'I': 'Ш',
         'O': 'З',
         'P': 'Э',
-        '{': 'Х',
-        '}': 'Ъ',
         'A': 'Ф',
         'S': 'Ы',
         'D': 'В',
@@ -87,7 +83,6 @@ def fix_keyboard_layout(text, direction=None):
         '<': 'Б',
         '>': 'Ю',
         '?': 'Х',
-        '~': 'Ё'
     }
 
     ru_to_en = {v: k for k, v in en_to_ru.items()}
