@@ -25,6 +25,19 @@
                         ]
                     },
                     {
+                        "description": "auto layout fixer",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "t",
+                                    "modifiers": { "mandatory": ["control", "command"] }
+                                },
+                                "to": [{ "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/auto_layout_fixer.py" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "caps lock -> fn",
                         "manipulators": [
                             {
@@ -92,22 +105,6 @@
                                     },
                                     { "key_code": "spacebar" }
                                 ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "ropt + spacebar -> spacebar",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": ["right_option"],
-                                        "optional": ["left_shift", "right_shift"]
-                                    }
-                                },
-                                "to": [{ "key_code": "spacebar" }],
                                 "type": "basic"
                             }
                         ]
