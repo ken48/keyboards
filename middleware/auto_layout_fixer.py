@@ -15,9 +15,12 @@ def run_applescript(script):
         print(f"Error: {process.stderr}")
     return process.stdout
 
-def run_keystroke(keystroke):
+def run_keystroke(keystroke, need_wait=True):
     retstdout = run_applescript(f'tell application "System Events" to {keystroke}')
-    time.sleep(0.15)
+
+    if need_wait:
+        time.sleep(0.15)
+
     return retstdout
 
 def fix_keyboard_layout(text, direction=None):
@@ -122,7 +125,7 @@ def main():
 
             process = subprocess.run(['pbcopy'], input=final_text, text=True)
             if process.returncode == 0:
-                run_keystroke(KEYSTROKE_PASTE)
+                run_keystroke(KEYSTROKE_PASTE, need_wait=False)
                 run_keystroke(KEYSTROKE_TOGGLE_LAYOUT)
             else:
                 print("Failed to copy to clipboard")

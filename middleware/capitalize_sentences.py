@@ -4,7 +4,7 @@ import time
 import re
 import sys
 
-KEYSTROKE_SELECT_ALL = "key code 0 using command down"
+KEYSTROKE_SELECT_BLOCK = "key code 126 using {shift down, option down}"
 KEYSTROKE_COPY = "key code 8 using command down"
 KEYSTROKE_PASTE = "key code 9 using command down"
 
@@ -44,7 +44,7 @@ def capitalize_sentences(text):
 
 def main():
 
-    full_selection = len(sys.argv) > 1 and sys.argv[1] == "--select-all"
+    block_selection = len(sys.argv) > 1 and sys.argv[1] == "--select-block"
 
     try:
         original_clipboard = subprocess.run(['pbpaste'], capture_output=True, text=True)
@@ -52,8 +52,8 @@ def main():
     except:
         original_content = ""
 
-    if full_selection:
-        run_keystroke(KEYSTROKE_SELECT_ALL)
+    if block_selection:
+        run_keystroke(KEYSTROKE_SELECT_BLOCK)
     
     try:
         run_keystroke(KEYSTROKE_COPY)
