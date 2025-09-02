@@ -17,7 +17,7 @@ def run_applescript(script):
 
 def run_keystroke(keystroke):
     retstdout = run_applescript(f'tell application "System Events" to {keystroke}')
-    time.sleep(0.2)
+    time.sleep(0.25)
     return retstdout
 
 def fix_keyboard_layout(text, direction=None):
