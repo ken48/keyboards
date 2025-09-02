@@ -4,6 +4,27 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "capitalize sentences",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "e",
+                                    "modifiers": { "mandatory": ["control", "command"] }
+                                },
+                                "to": [{ "shell_command": "python3 /Users/kirill/projects/cvs/keyboards/middleware/capitalize_sentences.py" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "e",
+                                    "modifiers": { "mandatory": ["control", "command", "shift"] }
+                                },
+                                "to": [{ "shell_command": "python3 /Users/kirill/projects/cvs/keyboards/middleware/capitalize_sentences.py --select-all" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "caps lock -> fn",
                         "manipulators": [
                             {
@@ -46,12 +67,6 @@
                         "description": "rcmd + space",
                         "manipulators": [
                             {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": { "mandatory": ["right_command"] }
@@ -63,29 +78,6 @@
                                 "type": "basic"
                             },
                             {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": { "mandatory": ["right_command"] }
-                                },
-                                "to": [
-                                    { "key_code": "comma" },
-                                    { "key_code": "spacebar" }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "ru" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
                                 "from": {
                                     "key_code": "spacebar",
                                     "modifiers": {
@@ -98,32 +90,7 @@
                                         "key_code": "keypad_period",
                                         "modifiers": ["shift"]
                                     },
-                                    { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "right_shift": "on" } }
-                                ],
-                                "type": "basic"
-                            },
-                            {
-                                "conditions": [
-                                    {
-                                        "input_sources": [{ "language": "en" }],
-                                        "type": "input_source_if"
-                                    }
-                                ],
-                                "from": {
-                                    "key_code": "spacebar",
-                                    "modifiers": {
-                                        "mandatory": ["right_command", "shift"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "period",
-                                        "modifiers": []
-                                    },
-                                    { "key_code": "spacebar" },
-                                    { "sticky_modifier": { "right_shift": "on" } }
+                                    { "key_code": "spacebar" }
                                 ],
                                 "type": "basic"
                             }
