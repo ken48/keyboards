@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>local.hotkeyd</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>python</string>
+    <string>/Users/kirill/projects/cvs/keyboards/middleware/hotkeys/hotkeyd/hotkeyd.py</string>
+  </array>
+
+  <!-- запускать при входе -->
+  <key>RunAtLoad</key>
+  <true/>
+
+  <!-- перезапускать при падении -->
+  <key>KeepAlive</key>
+  <true/>
+
+  <!-- чтобы точно стартовал в GUI-сессии -->
+  <key>LimitLoadToSessionType</key>
+  <string>Aqua</string>
+
+  <!-- чтобы скрипту хватало PATH -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/kirill/.pyenv/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+
+  <!-- куда писать логи -->
+  <key>StandardOutPath</key>
+  <string>/tmp/hotkeyd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/hotkeyd.err.log</string>
+</dict>
+</plist>

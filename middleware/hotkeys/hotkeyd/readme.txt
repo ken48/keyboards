@@ -2,8 +2,11 @@
 Проблема карабинера в том, что он иногда пропускает модификатор option и печатает просто букву.
 А так как я активно использую слои раскладок ОС, которые доступны через option или shift+option, то для меня это проблема.
 
-монитор работает как питоновский скрипт. его надо зарегать в launch 
+Монитор работает как питоновский скрипт.
+путь к конфигу с хоткеями и действиями должен быть в
+~/.hotkeyd.json
 
+Его можно как запускать в каждой сессии заново, так и зарегать в качестве демона.
 
 1. Создай plist-файл
 
@@ -19,9 +22,8 @@
 
   <key>ProgramArguments</key>
   <array>
-    <string>/usr/bin/python3</string>
-    <string>/Users/kirill/bin/hotkeyd.py</string>
-    <string>/Users/kirill/.hotkeyd.json</string>
+    <string>python</string>
+    <string>/Users/kirill/projects/cvs/keyboards/middleware/hotkeys/hotkeyd/hotkeyd.py</string>
   </array>
 
   <!-- запускать при входе -->
@@ -40,7 +42,7 @@
   <key>EnvironmentVariables</key>
   <dict>
     <key>PATH</key>
-    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <string>/Users/kirill/.pyenv/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
   </dict>
 
   <!-- куда писать логи -->
@@ -52,14 +54,14 @@
 </plist>
 
 🔑 Обрати внимание:
-путь к python3 (/usr/bin/python3) и путь к скрипту (/Users/kirill/bin/hotkeyd.py) должны быть именно те, что ты реально используешь;
-в Accessibility/Input Monitoring нужно добавить именно этот бинарь python3.
+путь к python (python) и путь к скрипту (/Users/kirill/projects/cvs/keyboards/middleware/hotkeys/hotkeyd/hotkeyd.py) должны быть именно те, что ты реально используешь;
+в Accessibility/Input Monitoring нужно добавить именно этот бинарь python: /Users/kirill/.pyenv/bin/python
 
 2. Подгрузи агент
 В терминале:
 launchctl unload ~/Library/LaunchAgents/local.hotkeyd.plist 2>/dev/null || true
-launchctl load   ~/Library/LaunchAgents/local.hotkeyd.plist
-launchctl start  local.hotkeyd
+launchctl load ~/Library/LaunchAgents/local.hotkeyd.plist
+launchctl start local.hotkeyd
 
 3. Проверяй логи
 tail -f /tmp/hotkeyd.out.log /tmp/hotkeyd.err.log

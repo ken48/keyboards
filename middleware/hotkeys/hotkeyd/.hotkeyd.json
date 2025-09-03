@@ -3,19 +3,19 @@
     {
       "hotkey": "cmd+ctrl+t",
       "action": "shell",
-      "cmd": "sh -c '/Users/kirill/.pyenv/shims/python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py; osascript -e \"tell application \\\"System Events\\\" to key code 49 using control down\"'",
+      "cmd": "sh -c 'python -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py; osascript -e \"tell application \\\"System Events\\\" to key code 49 using control down\"'",
       "swallow": true
     },
     {
       "hotkey": "cmd+ctrl+e",
       "action": "shell",
-      "cmd": "/Users/kirill/.pyenv/shims/python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py --select-all",
+      "cmd": "python -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py --select-all",
       "swallow": true
     },
     {
       "hotkey": "alt+cmd+ctrl+e",
       "action": "shell",
-      "cmd": "/Users/kirill/.pyenv/shims/python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py",
+      "cmd": "python -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py",
       "swallow": true
     }
   ]
