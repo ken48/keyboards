@@ -84,7 +84,7 @@ def capitalize(select_block=False):
             time.sleep(0.07)
 
         keyboard.send_copy()
-        time.sleep(0.12)
+        time.sleep(0.17)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
