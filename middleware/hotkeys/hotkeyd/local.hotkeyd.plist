@@ -7,8 +7,9 @@
 
   <key>ProgramArguments</key>
   <array>
-    <string>python</string>
-    <string>/Users/kirill/projects/cvs/keyboards/middleware/hotkeys/hotkeyd/hotkeyd.py</string>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>export PYENV_ROOT=$HOME/.pyenv; export PATH=$PYENV_ROOT/bin:$PYENV_ROOT/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin; exec $HOME/.pyenv/shims/python $HOME/projects/cvs/keyboards/middleware/hotkeys/hotkeyd/hotkeyd.py</string>
   </array>
 
   <!-- запускать при входе -->
@@ -26,8 +27,10 @@
   <!-- чтобы скрипту хватало PATH -->
   <key>EnvironmentVariables</key>
   <dict>
+    <key>PYENV_ROOT</key>
+    <string>/Users/kirill/.pyenv</string>
     <key>PATH</key>
-    <string>/Users/kirill/.pyenv/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <string>/Users/kirill/.pyenv/bin:/Users/kirill/.pyenv/shims:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
   </dict>
 
   <!-- куда писать логи -->
