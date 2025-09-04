@@ -5,7 +5,7 @@ import time
 from input_source import MacInputSourceManager
 from keyboard import FastKeyboard
 
-def fix_keyboard_layout(text, direction=None):
+def fix_keyboard_layout(text, test_text):
     en_to_ru = {
         'q': 'й',
         'w': 'ц',
@@ -72,8 +72,8 @@ def fix_keyboard_layout(text, direction=None):
 
     ru_to_en = {v: k for k, v in en_to_ru.items()}
 
-    en_chars = sum(1 for char in text if char in en_to_ru)
-    ru_chars = sum(1 for char in text if char in ru_to_en)
+    en_chars = sum(1 for char in test_text if char in en_to_ru)
+    ru_chars = sum(1 for char in test_text if char in ru_to_en)
 
     if en_chars > ru_chars:
         return ''.join(en_to_ru.get(char, char) for char in text), 'ru'
@@ -85,9 +85,11 @@ def find_and_replace_last_sequence(text):
     if not text or text.isspace():
         return text
 
-    max_chars = 10
+    max_chars = 12
+    test_chars = 1
     last_part = text[-max_chars:]
-    converted_last_part, lang = fix_keyboard_layout(last_part)
+    test_part = text[-test_chars:]
+    converted_last_part, lang = fix_keyboard_layout(last_part, test_part)
     return text[:-max_chars] + converted_last_part, lang
 
 def main():
