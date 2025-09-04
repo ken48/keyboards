@@ -146,6 +146,7 @@ def run_action(rule: dict):
                     text=True,
                     check=True
                 )
+                log(f"action '{cmd}' succeeded")
             except subprocess.CalledProcessError as e:
                 log(f"Code: {e.returncode}\nSTDERR: {e.stderr}")
 

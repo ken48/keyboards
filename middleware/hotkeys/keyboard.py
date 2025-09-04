@@ -1,3 +1,5 @@
+import time
+
 from Quartz import (
     CGEventCreateKeyboardEvent,
     CGEventPost,
@@ -37,6 +39,8 @@ class FastKeyboard:
             if modifier_flags:
                 CGEventSetFlags(event_down, modifier_flags)
             CGEventPost(kCGHIDEventTap, event_down)
+
+            time.sleep(0.02)
 
             # Key up
             event_up = CGEventCreateKeyboardEvent(None, key_code, False)
