@@ -86,9 +86,9 @@ def find_and_replace_last_sequence(text):
         return text
 
     max_chars = 12
-    test_chars = 1
+    test_chars = 2
     last_part = text[-max_chars:]
-    test_part = text[-test_chars:]
+    test_part = last_part[-test_chars:]
     converted_last_part, lang = fix_keyboard_layout(last_part, test_part)
     return text[:-max_chars] + converted_last_part, lang
 
@@ -100,10 +100,10 @@ def main():
 
     try:
         keyboard.send_select_last_line()
-        time.sleep(0.07)
+        time.sleep(0.1)
 
         keyboard.send_copy()
-        time.sleep(0.17)
+        time.sleep(0.18)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
@@ -122,7 +122,7 @@ def main():
         else:
             print(f'STDERR: unknown lang {lang}.', flush=True)
 
-        time.sleep(0.05)
+        time.sleep(0.07)
 
     finally:
         if original:

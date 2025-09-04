@@ -27,10 +27,10 @@ def capitalize(select_block=False):
     try:
         if select_block:
             keyboard.send_select_all()
-            time.sleep(0.07)
+            time.sleep(0.1)
 
         keyboard.send_copy()
-        time.sleep(0.17)
+        time.sleep(0.18)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
@@ -42,7 +42,7 @@ def capitalize(select_block=False):
         subprocess.run(['pbcopy'], input=transformed, text=True)
         keyboard.send_paste()
 
-        time.sleep(0.05)
+        time.sleep(0.07)
 
     finally:
         if original:
