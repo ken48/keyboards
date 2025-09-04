@@ -185,8 +185,16 @@ def run_action(rule: dict):
     if rule["action"] == "shell":
         cmd = rule["cmd"]
         if cmd:
-            subprocess.run(cmd, shell=True)
-
+            try:
+                subprocess.run(
+                    cmd,
+                    shell=True,
+                    capture_output=True,
+                    text=True,
+                    check=True
+                )
+            except subprocess.CalledProcessError as e:
+                log(f"Code: {e.returncode}\nSTDERR: {e.stderr}")
 
 # ---------- демон ----------
 class HotkeyDaemon:
