@@ -55,3 +55,6 @@ class FastKeyboard:
 
     def send_select_last_word(self):
         self.send_key('left', self.modifiers['sft'] | self.modifiers['opt'])
+
+    def send_select_last_line(self):
+        self.send_key('left', self.modifiers['sft'] | self.modifiers['cmd'])

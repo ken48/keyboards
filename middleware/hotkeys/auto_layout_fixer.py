@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import subprocess
 import time
+
+from input_source import MacInputSourceManager
 from keyboard import FastKeyboard
 
 def fix_keyboard_layout(text, direction=None):
@@ -74,24 +76,28 @@ def fix_keyboard_layout(text, direction=None):
     ru_chars = sum(1 for char in text if char in ru_to_en)
 
     if en_chars > ru_chars:
-        return ''.join(en_to_ru.get(char, char) for char in text)
+        return ''.join(en_to_ru.get(char, char) for char in text), 'ru'
     else:
-        return ''.join(ru_to_en.get(char, char) for char in text)
+        return ''.join(ru_to_en.get(char, char) for char in text), 'en'
 
 
 def find_and_replace_last_sequence(text):
     if not text or text.isspace():
         return text
 
-    return fix_keyboard_layout(text)
+    max_chars = 10
+    last_part = text[-max_chars:]
+    converted_last_part, lang = fix_keyboard_layout(last_part)
+    return text[:-max_chars] + converted_last_part, lang
 
 def main():
     keyboard = FastKeyboard()
+    input_manager = MacInputSourceManager()
 
     original = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
     try:
-        keyboard.send_select_last_word()
+        keyboard.send_select_last_line()
         time.sleep(0.07)
 
         keyboard.send_copy()
@@ -102,10 +108,17 @@ def main():
         if not text.strip():
             return
 
-        transformed = find_and_replace_last_sequence(text)
+        transformed, lang = find_and_replace_last_sequence(text)
 
         subprocess.run(['pbcopy'], input=transformed, text=True)
         keyboard.send_paste()
+
+        if lang == 'en':
+            input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.en-sym.en-sym')
+        elif lang == 'ru':
+            input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.ru_sym.ru-sym')
+        else:
+            print(f'STDERR: unknown lang {lang}.', flush=True)
 
         time.sleep(0.05)
 

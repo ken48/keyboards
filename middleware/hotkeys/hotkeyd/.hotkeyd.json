@@ -3,7 +3,7 @@
     {
       "hotkey": "cmd+ctrl+t",
       "action": "shell",
-      "cmd": "sh -c 'python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py; osascript -e \"tell application \\\"System Events\\\" to key code 49 using control down\"'",
+      "cmd": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py",
       "swallow": true
     },
     {
