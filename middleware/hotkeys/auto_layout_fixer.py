@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+import re
 import subprocess
 import time
 
 from input_source import MacInputSourceManager
 from keyboard import FastKeyboard
+
 
 def fix_keyboard_layout(text, test_text):
     en_to_ru = {
@@ -17,7 +19,6 @@ def fix_keyboard_layout(text, test_text):
         'i': 'ш',
         'o': 'з',
         'p': 'э',
-        ']': 'ъ',
         'a': 'ф',
         's': 'ы',
         'd': 'в',
@@ -81,18 +82,35 @@ def fix_keyboard_layout(text, test_text):
         return ''.join(ru_to_en.get(char, char) for char in text), 'en'
 
 
-def find_and_replace_last_sequence(text):
+def find_and_replace_last_sequence(text: str):
     if not text or text.isspace():
-        return text
+        return text, None
 
     max_chars = 12
     test_chars = 3
-    last_part = text[-max_chars:]
-    test_part = last_part[-test_chars:]
-    converted_last_part, lang = fix_keyboard_layout(last_part, test_part)
-    return text[:-max_chars] + converted_last_part, lang
+
+    last_part = text[-max_chars:] if len(text) > max_chars else text
+
+    matches = list(re.finditer(r'\S+', last_part))
+    if not matches:
+        return text, None
+
+    start, end = matches[-1].span()
+    word = last_part[start:end]
+
+    test_part = word[-test_chars:]
+    converted_word, lang = fix_keyboard_layout(word, test_part)
+
+    if converted_word == word:
+        return text, lang
+
+    new_last_part = last_part[:start] + converted_word + last_part[end:]
+    prefix = text[:-len(last_part)] if len(last_part) < len(text) else ''
+    return prefix + new_last_part, lang
 
 def main():
+    start_ts = time.perf_counter()
+
     keyboard = FastKeyboard()
     input_manager = MacInputSourceManager()
 
@@ -100,10 +118,10 @@ def main():
 
     try:
         keyboard.send_select_last_line()
-        time.sleep(0.075)
+        time.sleep(0.07)
 
         keyboard.send_copy()
-        time.sleep(0.175)
+        time.sleep(0.17)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
@@ -120,13 +138,16 @@ def main():
         elif lang == 'ru':
             input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.ru_sym.ru-sym')
         else:
-            print(f'STDERR: unknown lang {lang}.', flush=True)
+            print(f'Warning: unknown lang {lang}.', flush=True)
 
-        time.sleep(0.075)
+        time.sleep(0.07)
 
     finally:
         if original:
             subprocess.run(['pbcopy'], input=original, text=True)
+
+        duration = time.perf_counter() - start_ts
+        print(f'duration: {duration:.3f} sec.', flush=True)
 
 if __name__ == "__main__":
     main()

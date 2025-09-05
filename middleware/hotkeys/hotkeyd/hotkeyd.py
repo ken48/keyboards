@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 import time
+from datetime import datetime
 import threading
 from pathlib import Path
 from typing import Dict, Tuple, Optional
@@ -138,17 +139,22 @@ def run_action(rule: dict):
     if rule["action"] == "shell":
         cmd = rule["cmd"]
         if cmd:
-            try:
-                subprocess.run(
-                    cmd,
-                    shell=True,
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                log(f"action '{cmd}' succeeded")
-            except subprocess.CalledProcessError as e:
-                log(f"Code: {e.returncode}\nSTDERR: {e.stderr}")
+            start_ts = time.perf_counter()
+
+            result = subprocess.run(
+                cmd,
+                shell=True,
+                capture_output=True,
+                text=True
+            )
+
+            duration = time.perf_counter() - start_ts
+
+            error = ""
+            if result.returncode != 0:
+                error = f"\n STDERR: {result.stderr}"
+
+            log(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} action '{cmd}' finished in {duration:.3f} sec\n STDOUT: {result.stdout}{error}")
 
 # ---------- демон ----------
 class HotkeyDaemon:

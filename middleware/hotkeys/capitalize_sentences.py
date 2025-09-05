@@ -20,6 +20,8 @@ def capitalize_block(text: str) -> str:
 
 
 def capitalize(select_block=False):
+    start_ts = time.perf_counter()
+
     keyboard = FastKeyboard()
 
     original = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
@@ -27,10 +29,10 @@ def capitalize(select_block=False):
     try:
         if select_block:
             keyboard.send_select_all()
-            time.sleep(0.075)
+            time.sleep(0.07)
 
         keyboard.send_copy()
-        time.sleep(0.175)
+        time.sleep(0.17)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
 
@@ -42,11 +44,14 @@ def capitalize(select_block=False):
         subprocess.run(['pbcopy'], input=transformed, text=True)
         keyboard.send_paste()
 
-        time.sleep(0.075)
+        time.sleep(0.07)
 
     finally:
         if original:
             subprocess.run(['pbcopy'], input=original, text=True)
+
+        duration = time.perf_counter() - start_ts
+        print(f'duration: {duration:.3f} sec.', flush=True)
 
 
 if __name__ == "__main__":
