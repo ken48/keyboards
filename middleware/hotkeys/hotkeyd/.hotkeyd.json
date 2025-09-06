@@ -9,13 +9,13 @@
     {
       "hotkey": "cmd+ctrl+e",
       "action": "shell",
-      "cmd": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py --select-all",
+      "cmd": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py --select-all",
       "swallow": true
     },
     {
       "hotkey": "alt+cmd+ctrl+e",
       "action": "shell",
-      "cmd": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/capitalize_sentences.py",
+      "cmd": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py",
       "swallow": true
     }
   ]
