@@ -136,7 +136,7 @@ def main():
         if lang == 'en':
             input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.en-sym.en-sym')
         elif lang == 'ru':
-            input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.ru_sym.ru-sym')
+            input_manager.switch_by_id('org.sil.ukelele.keyboardlayout.ru-sym.ru-sym')
         else:
             print(f'Warning: unknown lang {lang}.', flush=True)
 
