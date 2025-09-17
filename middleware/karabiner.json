@@ -1,39 +1,39 @@
 {
+    "global": { "check_for_updates_on_startup": false },
     "profiles": [
         {
             "complex_modifications": {
-                "parameters": { "basic.to_delayed_action_delay_milliseconds": 80 },
                 "rules": [
                     {
-                        "description": "capitalize sentences",
+                        "description": "normalize text",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "e",
-                                    "modifiers": { "mandatory": ["control", "command"] }
+                                    "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": [{ "shell_command": "python3 /Users/kirill/projects/cvs/keyboards/middleware/capitalize_sentences.py" }],
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py --select-all" },
                                 "type": "basic"
                             },
                             {
                                 "from": {
                                     "key_code": "e",
-                                    "modifiers": { "mandatory": ["control", "command", "shift"] }
+                                    "modifiers": { "mandatory": ["left_command", "left_control", "left_option"] }
                                 },
-                                "to": [{ "shell_command": "python3 /Users/kirill/projects/cvs/keyboards/middleware/capitalize_sentences.py --select-block" }],
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py" },
                                 "type": "basic"
                             }
                         ]
                     },
                     {
-                        "description": "auto layout fixer",
+                        "description": "layout fixer",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "t",
-                                    "modifiers": { "mandatory": ["control", "command"] }
+                                    "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": [{ "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/auto_layout_fixer.py" }],
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py" },
                                 "type": "basic"
                             }
                         ]
