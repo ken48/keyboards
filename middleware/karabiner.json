@@ -12,7 +12,7 @@
                                     "key_code": "e",
                                     "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py --select-all" },
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/reformat_text.py --select-all" },
                                 "type": "basic"
                             },
                             {
@@ -20,7 +20,7 @@
                                     "key_code": "e",
                                     "modifiers": { "mandatory": ["left_command", "left_control", "left_option"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/reformat_text.py" },
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/reformat_text.py" },
                                 "type": "basic"
                             }
                         ]
@@ -33,7 +33,7 @@
                                     "key_code": "t",
                                     "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/hotkeys/auto_layout_fixer.py" },
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/auto_layout_fixer.py" },
                                 "type": "basic"
                             }
                         ]
