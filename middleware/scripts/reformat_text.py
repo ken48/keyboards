@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# normalize text from clipboard: headings → numbered (with blank lines around), lists → normalized (with blank lines around), spaces fixed, sentences capitalized
+# normalize text from clipboard: headings (hash) → capitalized + blank lines; optional numbering via flag; lists → normalized (with blank lines around), spaces fixed, sentences capitalized
 # -*- coding: utf-8 -*-
 import subprocess
 import re
@@ -20,23 +20,58 @@ def capitalize_block(text: str) -> str:
         flags=re.IGNORECASE | re.MULTILINE
     )
 
+def _cap_first(s: str) -> str:
+    s = s.strip()
+    if not s:
+        return s
+    return s[0].upper() + s[1:]
+
 # -----------------------------
-# 1) Заголовки: "#", "##", ... → "1.", "1.1.", ...
+# 1) Заголовки: "#", "##", ... → "1.", "1.1.", ... (опционально)
 _H_RE = re.compile(r'^\s{0,3}(#{1,6})\s*(.+?)\s*$', re.MULTILINE)
 _H_SENTINEL = "\x00H "  # скрытая метка для нумерованных заголовков
 
 def convert_md_headings_to_numbered(text: str) -> str:
+    """Заменяет '# ...' на нумерованные заголовки со снятием решёток.
+       Добавляет sentinel, чтобы потом корректно расставить пустые строки."""
     counters = [0] * 6  # уровни H1..H6
     def on_heading(m: re.Match) -> str:
-        hashes, title = m.group(1), m.group(2).strip()
+        hashes, title = m.group(1), _cap_first(m.group(2))
         level = len(hashes)
         counters[level - 1] += 1
         for i in range(level, 6):
             counters[i] = 0
         numbering = '.'.join(str(counters[i]) for i in range(level) if counters[i] > 0)
-        # помечаем как заголовок (чтобы не спутать со списком)
         return f"{_H_SENTINEL}{numbering}. {title}"
     return _H_RE.sub(on_heading, text)
+
+def normalize_md_hash_headings(text: str) -> str:
+    """Оставляет '# ...' как есть, но:
+       — капитализирует первую букву после решёток,
+       — добавляет пустые строки до/после (если не начало/конец и соседние строки не пустые)."""
+    lines = text.split('\n')
+    out = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = _H_RE.match(line)
+        if m:
+            hashes, title = m.group(1), _cap_first(m.group(2))
+            # пустая строка сверху (если не самая первая строка и сверху не пусто)
+            if out and out[-1].strip() != "":
+                out.append("")
+            out.append(f"{hashes} {title}".rstrip())
+            # пустая строка снизу (если дальше есть непустая строка)
+            if i + 1 < len(lines) and lines[i + 1].strip() != "":
+                out.append("")
+            i += 1
+            continue
+        else:
+            out.append(line.rstrip())
+            i += 1
+    text = '\n'.join(out)
+    # 3+ пустых -> 2
+    return re.sub(r'\n{3,}', '\n\n', text)
 
 # -----------------------------
 # 2) Списки: нормализация отступов (построчно, сохраняем пустые строки)
@@ -70,8 +105,7 @@ def normalize_spaces(text: str) -> str:
     # добавить пробел после пунктуации:
     # 1) для , ; : ! ? — всегда, если дальше не пробел
     text = re.sub(r'([,;:!?])(?=\S)', r'\1 ', text)
-    # 2) для точки — только если слева НЕ цифра (не трогаем "1.1", "2.3.4")
-    text = re.sub(r'(?<!\d)\.(?=\S)', '. ', text)
+    # 2) для точки — НЕ добавляем пробел (по просьбе)
 
     # схлопнуть множественные пробелы/табы внутри строк
     text = re.sub(r'[ \t]{2,}', ' ', text)
@@ -85,7 +119,10 @@ def normalize_spaces(text: str) -> str:
 # -----------------------------
 # 3.1) Пустые строки вокруг списков и нумерованных заголовков
 _LIST_LINE_START = re.compile(r'^\s*(?:[-+*]\s+|\d+[.)]\s+)')  # начало пункта списка
+
 def ensure_blanklines_around_blocks(text: str) -> str:
+    """Работает только с НУМЕРОВАННЫМИ заголовками (через sentinel) и списками.
+       Заголовки с '#' обрабатываются отдельной функцией normalize_md_hash_headings()."""
     lines = text.split('\n')
     out = []
     in_list = False
@@ -104,7 +141,6 @@ def ensure_blanklines_around_blocks(text: str) -> str:
             if out and not prev_is_blank():
                 out.append("")
             out.append(line)
-            # пустая строка после, если следующая не пустая и не конец файла
             if i + 1 < len(lines) and lines[i + 1].strip() != "":
                 out.append("")
             i += 1
@@ -112,8 +148,9 @@ def ensure_blanklines_around_blocks(text: str) -> str:
 
         # --- Список: пустая строка перед первым пунктом и после последнего ---
         if is_list:
-            if not in_list and not prev_is_blank():
-                out.append("")       # начало списка
+            # если список начинается с первой строки файла — сверху не добавляем пустую строку
+            if not in_list and not prev_is_blank() and out:
+                out.append("")       # начало списка (не в самом начале файла)
             in_list = True
             out.append(line)
 
@@ -144,17 +181,25 @@ def ensure_blanklines_around_blocks(text: str) -> str:
 
 # -----------------------------
 # 4) Порядок трансформаций
-def transform_text(md_text: str) -> str:
-    md_text = convert_md_headings_to_numbered(md_text)
+def transform_text(md_text: str, numbered_headings: bool = False) -> str:
+    if numbered_headings:
+        # Нумерация заголовков (решётки удаляются), потом расставим отступы через sentinel
+        md_text = convert_md_headings_to_numbered(md_text)
+    else:
+        # Без нумерации: привести '#'-заголовки (капитализация + пустые строки)
+        md_text = normalize_md_hash_headings(md_text)
+
+    # Общее для обоих режимов
     md_text = normalize_list_indents(md_text, indent_size=2)
     md_text = normalize_spaces(md_text)
+    # ВАЖНО: всегда расставляем пустые строки вокруг списков (и нумерованных заголовков, если они есть)
     md_text = ensure_blanklines_around_blocks(md_text)
     md_text = capitalize_block(md_text)
     return md_text
 
 # -----------------------------
 # 5) Основная функция
-def normalize(select_all: bool = False):
+def normalize(select_all: bool = False, numbered_headings: bool = False):
     start_ts = time.perf_counter()
     keyboard = FastKeyboard()
     original = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
@@ -171,7 +216,7 @@ def normalize(select_all: bool = False):
         if not text.strip():
             return
 
-        transformed = transform_text(text)
+        transformed = transform_text(text, numbered_headings=numbered_headings)
         subprocess.run(['pbcopy'], input=transformed, text=True)
         keyboard.send_paste()
         time.sleep(0.07)
@@ -184,4 +229,7 @@ def normalize(select_all: bool = False):
 # -----------------------------
 if __name__ == "__main__":
     from sys import argv
-    normalize('--select-all' in argv)
+    select_all = ('--select-all' in argv)
+    # ИНВЕРСИЯ: теперь по умолчанию НЕТ нумерации; '--no-headings' ВКЛЮЧАЕТ нумерацию
+    numbered_headings = ('--numbered-headings' in argv)
+    normalize(select_all=select_all, numbered_headings=numbered_headings)
