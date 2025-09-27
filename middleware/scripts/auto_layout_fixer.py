@@ -18,7 +18,7 @@ def fix_keyboard_layout(text, test_text):
         'u': 'г',
         'i': 'ш',
         'o': 'з',
-        'p': 'э',
+        'p': 'х',
         'a': 'ф',
         's': 'ы',
         'd': 'в',
@@ -38,7 +38,7 @@ def fix_keyboard_layout(text, test_text):
         'm': 'ь',
         ',': 'б',
         '.': 'ю',
-        '/': 'х',
+        '/': 'э',
         'Q': 'Й',
         'W': 'Ц',
         'E': 'У',
@@ -48,7 +48,7 @@ def fix_keyboard_layout(text, test_text):
         'U': 'Г',
         'I': 'Ш',
         'O': 'З',
-        'P': 'Э',
+        'P': 'Х',
         'A': 'Ф',
         'S': 'Ы',
         'D': 'В',
@@ -68,7 +68,7 @@ def fix_keyboard_layout(text, test_text):
         'M': 'Ь',
         '<': 'Б',
         '>': 'Ю',
-        '?': 'Х',
+        '?': 'Э',
     }
 
     ru_to_en = {v: k for k, v in en_to_ru.items()}
