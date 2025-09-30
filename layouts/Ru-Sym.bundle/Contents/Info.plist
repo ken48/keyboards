@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleIdentifier</key>
-	<string>org.sil.ukelele.keyboardlayout.ru_sym</string>
+	<string>org.sil.ukelele.keyboardlayout.ru-sym</string>
 	<key>CFBundleName</key>
 	<string>Ru-Sym</string>
 	<key>CFBundleVersion</key>
