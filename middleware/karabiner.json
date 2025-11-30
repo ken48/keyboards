@@ -33,33 +33,7 @@
                                     "key_code": "t",
                                     "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/auto_layout_fixer.py" },
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "caps lock -> fn",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "caps_lock",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "fn" }],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "fn -> ctrl",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "fn",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "left_control" }],
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/auto_layout_fixer.py >> /Users/kirill/auto_layout_fixer.log" },
                                 "type": "basic"
                             }
                         ]
@@ -112,6 +86,25 @@
                     }
                 ]
             },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 24926,
+                        "vendor_id": 7504
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 4229,
+                        "vendor_id": 14139
+                    },
+                    "ignore": true
+                }
+            ],
             "name": "kirill",
             "selected": true,
             "virtual_hid_keyboard": {
