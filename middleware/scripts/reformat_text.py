@@ -7,18 +7,50 @@ import time
 from keyboard import FastKeyboard
 
 # -----------------------------
+# 0) Регекспы (предкомпиляция)
+
+# Капитализация предложений
+_CAPITALIZE_SENT_RE = re.compile(
+    r'((?:^\s*(?:[—–-]\s+)?)|(?:[.!?]\s+))([a-zа-яё])',
+    flags=re.IGNORECASE | re.MULTILINE
+)
+
+# Заголовки '#'
+_H_RE = re.compile(r'^\s{0,3}(#{1,6})\s*(.+?)\s*$', re.MULTILINE)
+_H_SENTINEL = "\x00H "  # скрытая метка для нумерованных заголовков
+
+# Списки
+_BULLET_RE  = re.compile(r'^(\s*)([-+*])\s*(.+?)\s*$', re.MULTILINE)
+# ВАЖНО: не считаем строкой списка то, где после "1." сразу идёт "число."
+_ORDERED_RE = re.compile(
+    r'^(\s*)(\d+)([.)])\s+(?!\d+\.)\s*(.+?)\s*$',
+    re.MULTILINE
+)
+_LIST_LINE_START = re.compile(r'^\s*(?:[-+*]\s+|\d+[.)]\s+)')  # начало пункта списка
+
+# Пробелы / пунктуация внутри строки
+_NUM_COLON_RE = re.compile(r'(\d)[ \t]*:[ \t]*(\d)')          # 13 : 30 -> 13:30, 13: 30 -> 13:30
+# Для точки между числами ничего спец. не делаем — пробелы там не трогаем
+_BEFORE_PUNCT = re.compile(r'\s+([,;:!?])')                   # пробел перед ,;:!?
+_BEFORE_DOT   = re.compile(r'(?<!\d)\s+(\.)')                 # пробел перед точкой, если слева не цифра
+_AFTER_PUNCT  = re.compile(r'(?<!\d)([,;:!?])(?=\S)')         # пробел после ,;:!? (если слева не цифра)
+_MULTI_SPACE  = re.compile(r'[ \t]{2,}')                      # 2+ пробелов/табов
+
+# Многократные пустые строки
+_MANY_EMPTY_LINES_RE = re.compile(r'\n{3,}')
+
+
+# -----------------------------
 # 0) Капитализация предложений
 def capitalize_block(text: str) -> str:
     if not text.strip():
         return text
-    # начало строки (с опциональным маркером списка-тире) ИЛИ .?! + пробельный разделитель
-    pattern = r'((?:^\s*(?:[—–-]\s+)?)|(?:[.!?]\s+))([a-zа-яё])'
-    return re.sub(
-        pattern,
+
+    return _CAPITALIZE_SENT_RE.sub(
         lambda m: m.group(1) + m.group(2).upper(),
-        text,
-        flags=re.IGNORECASE | re.MULTILINE
+        text
     )
+
 
 def _cap_first(s: str) -> str:
     s = s.strip()
@@ -26,15 +58,15 @@ def _cap_first(s: str) -> str:
         return s
     return s[0].upper() + s[1:]
 
+
 # -----------------------------
 # 1) Заголовки: "#", "##", ... → "1.", "1.1.", ... (опционально)
-_H_RE = re.compile(r'^\s{0,3}(#{1,6})\s*(.+?)\s*$', re.MULTILINE)
-_H_SENTINEL = "\x00H "  # скрытая метка для нумерованных заголовков
 
 def convert_md_headings_to_numbered(text: str) -> str:
     """Заменяет '# ...' на нумерованные заголовки со снятием решёток.
        Добавляет sentinel, чтобы потом корректно расставить пустые строки."""
     counters = [0] * 6  # уровни H1..H6
+
     def on_heading(m: re.Match) -> str:
         hashes, title = m.group(1), _cap_first(m.group(2))
         level = len(hashes)
@@ -43,7 +75,9 @@ def convert_md_headings_to_numbered(text: str) -> str:
             counters[i] = 0
         numbering = '.'.join(str(counters[i]) for i in range(level) if counters[i] > 0)
         return f"{_H_SENTINEL}{numbering}. {title}"
+
     return _H_RE.sub(on_heading, text)
+
 
 def normalize_md_hash_headings(text: str) -> str:
     """Оставляет '# ...' как есть, но:
@@ -69,56 +103,68 @@ def normalize_md_hash_headings(text: str) -> str:
         else:
             out.append(line.rstrip())
             i += 1
+
     text = '\n'.join(out)
     # 3+ пустых -> 2
-    return re.sub(r'\n{3,}', '\n\n', text)
+    return _MANY_EMPTY_LINES_RE.sub('\n\n', text)
+
 
 # -----------------------------
 # 2) Списки: нормализация отступов (построчно, сохраняем пустые строки)
-_BULLET_RE  = re.compile(r'^(\s*)([-+*])\s*(.+?)\s*$', re.MULTILINE)
-_ORDERED_RE = re.compile(r'^(\s*)(\d+)([.)])\s*(.+?)\s*$', re.MULTILINE)
 
 def normalize_list_indents(text: str, indent_size: int = 2) -> str:
     out_lines = []
     for line in text.split('\n'):
         m_b = _BULLET_RE.match(line)
         m_o = _ORDERED_RE.match(line)
+
         if m_b:
-            leading, marker, body = m_b.groups()
-            level = max(0, len(leading) // indent_size)
-            out_lines.append(f"{' ' * (level * indent_size)}{marker} {body.strip()}")
+            _, marker, body = m_b.groups()
+            out_lines.append(f"- {body.strip()}")  # ровно уровень 0
         elif m_o:
-            leading, num, closer, body = m_o.groups()
-            level = max(0, len(leading) // indent_size)
-            out_lines.append(f"{' ' * (level * indent_size)}{num}{closer} {body.strip()}")
+            _, num, closer, body = m_o.groups()
+            out_lines.append(f"{num}{closer} {body.strip()}")  # тоже уровень 0
         else:
             out_lines.append(line.rstrip())
+
     return '\n'.join(out_lines)
 
+
+
 # -----------------------------
-# 3) Пробелы
+# 3) Пробелы (построчно, без трогания '\n')
+
 def normalize_spaces(text: str) -> str:
-    # убрать лишние пробелы перед пунктуацией (кроме точки между цифрами)
-    text = re.sub(r'\s+([,;:!?])', r'\1', text)
-    text = re.sub(r'(?<!\d)\s+(\.)', r'\1', text)  # перед точкой, если слева не цифра
+    lines = text.split('\n')
+    new_lines = []
 
-    # добавить пробел после пунктуации:
-    # 1) для , ; : ! ? — всегда, если дальше не пробел
-    text = re.sub(r'([,;:!?])(?=\S)', r'\1 ', text)
-    # 2) для точки — НЕ добавляем пробел (по просьбе)
+    for line in lines:
+        # 1) Числовые конструкции с двоеточием: 13 : 30 → 13:30, 13: 30 → 13:30
+        line = _NUM_COLON_RE.sub(r'\1:\2', line)
 
-    # схлопнуть множественные пробелы/табы внутри строк
-    text = re.sub(r'[ \t]{2,}', ' ', text)
+        # 2) убрать лишние пробелы перед пунктуацией
+        line = _BEFORE_PUNCT.sub(r'\1', line)
+        # перед точкой — только если слева НЕ цифра (чтобы не трогать 1.1, 3.14 и т.п.)
+        line = _BEFORE_DOT.sub(r'\1', line)
 
-    # убрать хвостовые пробелы
-    text = '\n'.join(line.rstrip() for line in text.split('\n'))
+        # 3) добавить пробел после пунктуации (, ; : ! ?), если дальше не пробел
+        # и слева не цифра → не трогаем "13:30"
+        line = _AFTER_PUNCT.sub(r'\1 ', line)
 
-    # 3+ пустых строк -> 2
-    return re.sub(r'\n{3,}', '\n\n', text)
+        # 4) схлопнуть множественные пробелы/табы
+        line = _MULTI_SPACE.sub(' ', line)
+
+        # 5) убрать хвостовые пробелы
+        new_lines.append(line.rstrip())
+
+    text = '\n'.join(new_lines)
+
+    # 6) 3+ пустых строк -> 2
+    return _MANY_EMPTY_LINES_RE.sub('\n\n', text)
+
 
 # -----------------------------
 # 3.1) Пустые строки вокруг списков и нумерованных заголовков
-_LIST_LINE_START = re.compile(r'^\s*(?:[-+*]\s+|\d+[.)]\s+)')  # начало пункта списка
 
 def ensure_blanklines_around_blocks(text: str) -> str:
     """Работает только с НУМЕРОВАННЫМИ заголовками (через sentinel) и списками.
@@ -176,11 +222,13 @@ def ensure_blanklines_around_blocks(text: str) -> str:
     # снять sentinel у заголовков и финально прибрать лишние пустые строки
     out = [l[len(_H_SENTINEL):] if l.startswith(_H_SENTINEL) else l for l in out]
     text = '\n'.join(out)
-    text = re.sub(r'\n{3,}', '\n\n', text)
+    text = _MANY_EMPTY_LINES_RE.sub('\n\n', text)
     return text
+
 
 # -----------------------------
 # 4) Порядок трансформаций
+
 def transform_text(md_text: str, numbered_headings: bool = False) -> str:
     if numbered_headings:
         # Нумерация заголовков (решётки удаляются), потом расставим отступы через sentinel
@@ -197,8 +245,10 @@ def transform_text(md_text: str, numbered_headings: bool = False) -> str:
     md_text = capitalize_block(md_text)
     return md_text
 
+
 # -----------------------------
 # 5) Основная функция
+
 def normalize(select_all: bool = False, numbered_headings: bool = False):
     start_ts = time.perf_counter()
     keyboard = FastKeyboard()
@@ -226,10 +276,11 @@ def normalize(select_all: bool = False, numbered_headings: bool = False):
         duration = time.perf_counter() - start_ts
         print(f'duration: {duration:.3f} sec.', flush=True)
 
+
 # -----------------------------
 if __name__ == "__main__":
     from sys import argv
     select_all = ('--select-all' in argv)
-    # ИНВЕРСИЯ: теперь по умолчанию НЕТ нумерации; '--no-headings' ВКЛЮЧАЕТ нумерацию
+    # по умолчанию без нумерации; '--numbered-headings' включает нумерацию
     numbered_headings = ('--numbered-headings' in argv)
     normalize(select_all=select_all, numbered_headings=numbered_headings)
