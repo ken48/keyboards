@@ -12,7 +12,7 @@
                                     "key_code": "e",
                                     "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/reformat_text.py --select-all" },
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/vcs/keyboards/middleware/scripts/reformat_text.py --select-all" },
                                 "type": "basic"
                             },
                             {
@@ -20,7 +20,7 @@
                                     "key_code": "e",
                                     "modifiers": { "mandatory": ["left_command", "left_control", "left_option"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/reformat_text.py" },
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/vcs/keyboards/middleware/scripts/reformat_text.py" },
                                 "type": "basic"
                             }
                         ]
@@ -33,20 +33,7 @@
                                     "key_code": "t",
                                     "modifiers": { "mandatory": ["left_command", "left_control"] }
                                 },
-                                "to": { "shell_command": "python3 -u /Users/kirill/projects/cvs/keyboards/middleware/scripts/auto_layout_fixer.py >> /Users/kirill/auto_layout_fixer.log" },
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "iso ` -> z",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "grave_accent_and_tilde",
-                                    "modifiers": { "optional": ["any"] }
-                                },
-                                "to": [{ "key_code": "z" }],
+                                "to": { "shell_command": "python3 -u /Users/kirill/projects/vcs/keyboards/middleware/scripts/auto_layout_fixer.py >> /Users/kirill/auto_layout_fixer.log" },
                                 "type": "basic"
                             }
                         ]
@@ -86,31 +73,9 @@
                     }
                 ]
             },
-            "devices": [
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "is_pointing_device": true,
-                        "product_id": 24926,
-                        "vendor_id": 7504
-                    },
-                    "ignore": false
-                },
-                {
-                    "identifiers": {
-                        "is_keyboard": true,
-                        "product_id": 4229,
-                        "vendor_id": 14139
-                    },
-                    "ignore": true
-                }
-            ],
-            "name": "kirill",
+            "name": "Default profile",
             "selected": true,
-            "virtual_hid_keyboard": {
-                "indicate_sticky_modifier_keys_state": false,
-                "keyboard_type_v2": "iso"
-            }
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }
