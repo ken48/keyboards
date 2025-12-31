@@ -252,7 +252,7 @@ def transform_text(md_text: str, numbered_headings: bool = False) -> str:
 def normalize(select_all: bool = False, numbered_headings: bool = False):
     start_ts = time.perf_counter()
     keyboard = FastKeyboard()
-    original = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
+    original = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
     had_original = bool(original)
     try:
         if select_all:
@@ -262,17 +262,17 @@ def normalize(select_all: bool = False, numbered_headings: bool = False):
         keyboard.send_copy()
         time.sleep(0.17)
 
-        text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
+        text = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
         if not text.strip():
             return
 
         transformed = transform_text(text, numbered_headings=numbered_headings)
-        subprocess.run(['pbcopy'], input=transformed, text=True)
+        subprocess.run(['pbcopy'], input=transformed, text=True, encoding="utf-8")
         keyboard.send_paste()
         time.sleep(0.07)
 
     finally:
-        subprocess.run(['pbcopy'], input=original if had_original else '', text=True)
+        subprocess.run(['pbcopy'], input=original if had_original else '', text=True, encoding="utf-8")
         duration = time.perf_counter() - start_ts
         print(f'duration: {duration:.3f} sec.', flush=True)
 

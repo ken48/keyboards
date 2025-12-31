@@ -114,7 +114,7 @@ def main():
     keyboard = FastKeyboard()
     input_manager = MacInputSourceManager()
 
-    original = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
+    original = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
 
     try:
         keyboard.send_select_last_line()
@@ -123,14 +123,14 @@ def main():
         keyboard.send_copy()
         time.sleep(0.17)
 
-        text = subprocess.run(['pbpaste'], capture_output=True, text=True).stdout
+        text = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
 
         if not text.strip():
             return
 
         transformed, lang = find_and_replace_last_sequence(text)
 
-        subprocess.run(['pbcopy'], input=transformed, text=True)
+        subprocess.run(['pbcopy'], input=transformed, text=True, encoding="utf-8")
         keyboard.send_paste()
 
         if lang == 'en':
@@ -144,7 +144,7 @@ def main():
 
     finally:
         if original:
-            subprocess.run(['pbcopy'], input=original, text=True)
+            subprocess.run(['pbcopy'], input=original, text=True, encoding="utf-8")
 
         duration = time.perf_counter() - start_ts
         print(f'duration: {duration:.3f} sec.', flush=True)
