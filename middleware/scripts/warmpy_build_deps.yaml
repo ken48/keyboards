@@ -1,0 +1,11 @@
+pip:
+  - pyobjc
+  - pyobjc-framework-Quartz
+
+import:
+  - objc
+  - Foundation
+  - AppKit
+  - Quartz
+  - ctypes
+  - ctypes.util
