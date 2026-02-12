@@ -1,172 +1,184 @@
 #!/bin/bash
 set -euo pipefail
 
-# --- Pick python interpreter
-# Contract:
-#   - If WARMPY_PYTHON is set -> must be absolute path to executable
-#   - Else -> use python3 from PATH
-#   - No other fallbacks
 
-if [[ -n "${WARMPY_PYTHON:-}" ]]; then
-  if [[ "$WARMPY_PYTHON" != /* ]]; then
-    echo "WARMPY_PYTHON must be an absolute path" >&2
-    exit 1
-  fi
-  if [[ ! -x "$WARMPY_PYTHON" ]]; then
-    echo "WARMPY_PYTHON not executable: $WARMPY_PYTHON" >&2
-    exit 1
-  fi
-  PYTHON="$WARMPY_PYTHON"
-else
-  if ! command -v python3 >/dev/null 2>&1; then
-    echo "python3 not found in PATH" >&2
-    exit 1
-  fi
-  PYTHON="$(command -v python3)"
-fi
-
+PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
 BUILD_DIR=".build"
-VENV_DIR="$BUILD_DIR/venv"
-MERGED_JSON="$BUILD_DIR/warmpy_build_deps.json"
 
-PLUGINS_DIR=""
+WARMUP_TMP_DIR="$PROJECT_DIR/$BUILD_DIR/tmp"
+mkdir -p "$WARMUP_TMP_DIR"
+WARMUP_JSON="$WARMUP_TMP_DIR/warmup.json"
+PYTHON=${WARMPY_PYTHON:?Set WARMPY_PYTHON explicitly}
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --plugins-dir)
-      PLUGINS_DIR="${2:-}"
-      shift 2
-      ;;
-    -h|--help)
-      echo "Usage: ./build.sh --plugins-dir <path>"
-      exit 0
-      ;;
-    *)
-      echo "Unknown argument: $1" >&2
-      exit 1
-      ;;
-  esac
-done
+IFS=$'\n\t'
 
-if [[ -z "$PLUGINS_DIR" ]]; then
-  echo "ERROR: --plugins-dir is required" >&2
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 <deps_yaml_or_dir>"
   exit 1
 fi
 
-PLUGINS_DIR="$("$PYTHON" -c 'import os,sys; print(os.path.abspath(os.path.expanduser(sys.argv[1])))' "$PLUGINS_DIR")"
+INPUT="$1"
 
-echo "Using python interpreter:"
-"$PYTHON" -V
-echo "Path:"
-echo "$PYTHON"
-echo "Plugins dir: $PLUGINS_DIR"
-
-mkdir -p "$BUILD_DIR"
-rm -rf "$BUILD_DIR/build" "$BUILD_DIR/dist" "$MERGED_JSON" "$VENV_DIR"
-
-"$PYTHON" -m venv "$VENV_DIR"
-# shellcheck disable=SC1090
-source "$VENV_DIR/bin/activate"
-
-# ---- Infra deps (hardcoded, project-owned) ----
-python -m pip install -U pip wheel
-python -m pip install "setuptools<70"
-python -m pip install pyobjc pyyaml py2app
-
-# ---- Plugin build deps contract (no heuristics) ----
-# Scan PLUGINS_DIR for all files whose names end with 'warmpy_build_deps.yaml', merge:
-#   pip:    list[str]  -> installed via pip at build time
-#   import: list[str]  -> python module names to force-include in py2app
-
-python - <<'PYSCRIPT' "$PLUGINS_DIR" "$MERGED_JSON"
-import json, sys
-from pathlib import Path
-import yaml
-
-plugins_dir = Path(sys.argv[1])
-out_json = Path(sys.argv[2])
-
-pip_list, imp_list = [], []
-pip_seen, imp_seen = set(), set()
-
-paths = sorted([p for p in plugins_dir.rglob('*warmpy_build_deps.yaml') if p.name.endswith('warmpy_build_deps.yaml')])
-
-for p in paths:
-    data = yaml.safe_load(p.read_text('utf-8')) or {}
-    pip_items = data.get('pip') or []
-    imp_items = data.get('import') or []
-
-    if not isinstance(pip_items, list):
-        raise SystemExit(f"{p}: field 'pip' must be a list")
-    if not isinstance(imp_items, list):
-        raise SystemExit(f"{p}: field 'import' must be a list")
-
-    for item in pip_items:
-        if not isinstance(item, str):
-            raise SystemExit(f"{p}: 'pip' items must be strings")
-        item = item.strip()
-        if item and item not in pip_seen:
-            pip_seen.add(item)
-            pip_list.append(item)
-
-    for item in imp_items:
-        if not isinstance(item, str):
-            raise SystemExit(f"{p}: 'import' items must be strings")
-        item = item.strip()
-        if item and item not in imp_seen:
-            imp_seen.add(item)
-            imp_list.append(item)
-
-out_json.parent.mkdir(parents=True, exist_ok=True)
-out_json.write_text(json.dumps({'pip': pip_list, 'import': imp_list}, indent=2) + "\n", 'utf-8')
-
-print(f"Merged warmpy_build_deps files: {len(paths)}")
-print(f"Wrote: {out_json}")
-print(f"pip deps: {len(pip_list)}; import deps: {len(imp_list)}")
-PYSCRIPT
-
-python - <<'PYSCRIPT' "$MERGED_JSON"
-import json, sys, subprocess
-from pathlib import Path
-
-p = Path(sys.argv[1])
-data = json.loads(p.read_text('utf-8')) if p.exists() else {'pip': []}
-deps = data.get('pip') or []
-
-if deps:
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', *deps])
-else:
-    print('No plugin pip deps to install')
-PYSCRIPT
-
-# ---- Write runtime config (only plugins_dir) ----
-python - <<'PYSCRIPT' "$PLUGINS_DIR"
-from pathlib import Path
-import yaml
-import sys
-
-plugins_dir = sys.argv[1]
-cfg_dir = Path.home() / '.warmpy'
-cfg_dir.mkdir(parents=True, exist_ok=True)
-try:
-    cfg_dir.chmod(0o700)
-except Exception:
-    pass
-
-cfg_file = cfg_dir / 'config.yaml'
-cfg = {'plugins_dir': plugins_dir}
-cfg_file.write_text(yaml.safe_dump(cfg), encoding='utf-8')
-print('Wrote', cfg_file)
-PYSCRIPT
-
-python setup.py py2app
-# Rename output bundle to warmpy.app
-if [[ -d ".build/dist" ]]; then
-  if [[ -d ".build/dist/main.app" ]]; then
-    rm -rf ".build/dist/warmpy.app"
-    mv ".build/dist/main.app" ".build/dist/warmpy.app"
-  fi
+if [[ -z "$INPUT" ]]; then
+  echo "ERROR: input is empty"
+  exit 1
 fi
 
+if [[ -f "$INPUT" ]]; then
+  DEPS_YAML="$INPUT"
+elif [[ -d "$INPUT" ]]; then
+  DEPS_YAML="$INPUT/warmpy_build_deps.yaml"
+else
+  echo "ERROR: input not found: $INPUT"
+  exit 1
+fi
 
-echo "Build done. App in $BUILD_DIR/dist/"
+# Canonicalize deps yaml path (INPUT may be relative and we cd later)
+DEPS_YAML="$(cd "$(dirname "$DEPS_YAML")" && pwd)/$(basename "$DEPS_YAML")"
+
+
+# Generate app icon (warmpy.icns) from assets/warmpy_icon.png if iconutil is available (macOS)
+if command -v iconutil >/dev/null 2>&1; then
+  ICON_PNG="$PROJECT_DIR/assets/warmpy_icon.png"
+  ICONSET_DIR="$PROJECT_DIR/.build/tmp/warmpy.iconset"
+  mkdir -p "$ICONSET_DIR"
+  # Create required sizes
+  sips -z 16 16     "$ICON_PNG" --out "$ICONSET_DIR/icon_16x16.png" >/dev/null
+  sips -z 32 32     "$ICON_PNG" --out "$ICONSET_DIR/icon_16x16@2x.png" >/dev/null
+  sips -z 32 32     "$ICON_PNG" --out "$ICONSET_DIR/icon_32x32.png" >/dev/null
+  sips -z 64 64     "$ICON_PNG" --out "$ICONSET_DIR/icon_32x32@2x.png" >/dev/null
+  sips -z 128 128   "$ICON_PNG" --out "$ICONSET_DIR/icon_128x128.png" >/dev/null
+  sips -z 256 256   "$ICON_PNG" --out "$ICONSET_DIR/icon_128x128@2x.png" >/dev/null
+  sips -z 256 256   "$ICON_PNG" --out "$ICONSET_DIR/icon_256x256.png" >/dev/null
+  sips -z 512 512   "$ICON_PNG" --out "$ICONSET_DIR/icon_256x256@2x.png" >/dev/null
+  sips -z 512 512   "$ICON_PNG" --out "$ICONSET_DIR/icon_512x512.png" >/dev/null
+  cp "$ICON_PNG" "$ICONSET_DIR/icon_512x512@2x.png"
+  iconutil -c icns "$ICONSET_DIR" -o "$PROJECT_DIR/assets/warmpy.icns" >/dev/null
+fi
+
+# 2) stable working dir
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+BUILD_DIR="$SCRIPT_DIR/.build"
+VENV_DIR="$BUILD_DIR/venv"
+
+PIP_DEPS_TXT="$BUILD_DIR/pip_deps.txt"
+EXTRA_INCLUDES_JSON="$BUILD_DIR/extra_includes.json"
+WARMUP_JSON="$BUILD_DIR/warmup.json"
+
+echo "== WarmPy build =="
+echo "project_dir : $SCRIPT_DIR"
+echo "deps_input : $INPUT"
+echo "deps_yaml   : $DEPS_YAML"
+echo
+
+# 3) YAML must exist (иначе стоп)
+if [[ ! -f "$DEPS_YAML" ]]; then
+  echo "ERROR: deps yaml not found: $DEPS_YAML"
+  exit 1
+fi
+
+# 4) clean build dirs
+rm -rf "$BUILD_DIR" dist build
+mkdir -p "$BUILD_DIR"
+
+$PYTHON -m venv .build/venv
+source .build/venv/bin/activate
+
+python -m pip install --upgrade pip wheel
+python -m pip install setuptools py2app pillow pyyaml pyobjc-framework-Cocoa
+
+PIP_DEPS_TXT="$BUILD_DIR/pip_deps.txt"
+EXTRA_INCLUDES_JSON="$BUILD_DIR/extra_includes.json"
+
+python - <<PY
+import json
+from pathlib import Path
+import yaml
+
+deps_path = Path(r"$DEPS_YAML")
+build_dir = Path(r"$BUILD_DIR")
+pip_out = Path(r"$PIP_DEPS_TXT")
+inc_out = Path(r"$EXTRA_INCLUDES_JSON")
+warmup_out = Path(r"$WARMUP_JSON")
+
+data = yaml.safe_load(deps_path.read_text(encoding="utf-8")) or {}
+
+pip_deps = data.get("pip") or []
+includes = data.get("includes") or []
+hidden = data.get("hidden_imports") or []
+warmup = data.get("warmup") or data.get("imports") or []
+warmup_extra = data.get("warmup_extra") or []
+
+for key, val in [("pip", pip_deps), ("includes", includes), ("hidden_imports", hidden), ("warmup/imports", warmup), ("warmup_extra", warmup_extra)]:
+    if not isinstance(val, list) or not all(isinstance(x, str) for x in val):
+        raise SystemExit(f"ERROR: '{key}' must be a list of strings")
+
+extra = []
+for seq in (includes, hidden, warmup, warmup_extra):
+    for m in seq:
+        m = m.strip()
+        if m and m not in extra:
+            extra.append(m)
+
+build_dir.mkdir(parents=True, exist_ok=True)
+pip_out.write_text("\n".join(pip_deps) + "\n", encoding="utf-8")
+inc_out.write_text(json.dumps(extra), encoding="utf-8")
+warmup_list = []
+for m in list(warmup) + list(warmup_extra):
+    m = str(m).strip()
+    if m and m not in warmup_list:
+        warmup_list.append(m)
+warmup_out.write_text(json.dumps({"warmup": warmup_list}, indent=2), encoding="utf-8")
+PY
+
+if [[ -s ".build/pip_deps.txt" ]]; then
+  python -m pip install -r .build/pip_deps.txt
+fi
+
+# Generate icns from yellow PNG
+ICON_PNG="assets/warmpy_icon.png"
+ICNS_OUT="assets/warmpy.icns"
+ICONSET_DIR=".build/warmpy.iconset"
+rm -rf "$ICONSET_DIR"
+mkdir -p "$ICONSET_DIR"
+for size in 16 32 128 256 512; do
+  sips -z $size $size "$ICON_PNG" --out "$ICONSET_DIR/icon_${size}x${size}.png" >/dev/null
+  sips -z $((size*2)) $((size*2)) "$ICON_PNG" --out "$ICONSET_DIR/icon_${size}x${size}@2x.png" >/dev/null
+done
+iconutil -c icns "$ICONSET_DIR" -o "$ICNS_OUT"
+
+
+
+
+python setup.py py2app
+mv .build/dist/main.app .build/dist/warmpy.app
+
+# Rename the actual executable inside the bundle so Activity Monitor shows "warmpy"
+APP_PATH=".build/dist/warmpy.app"
+if [[ -f "$APP_PATH/Contents/MacOS/main" ]]; then
+  mv "$APP_PATH/Contents/MacOS/main" "$APP_PATH/Contents/MacOS/warmpy"
+fi
+
+# Update Info.plist to match executable name + display names
+PLIST="$APP_PATH/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleExecutable warmpy" "$PLIST" 2>/dev/null ||   /usr/libexec/PlistBuddy -c "Add :CFBundleExecutable string warmpy" "$PLIST"
+
+/usr/libexec/PlistBuddy -c "Set :CFBundleName WarmPy" "$PLIST" 2>/dev/null ||   /usr/libexec/PlistBuddy -c "Add :CFBundleName string WarmPy" "$PLIST"
+
+/usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName WarmPy" "$PLIST" 2>/dev/null ||   /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string WarmPy" "$PLIST"
+
+# Copy generated warmup.json into bundle Resources (build artifact; not kept in repo)
+APP_PATH=".build/dist/warmpy.app"
+RES_DIR="$APP_PATH/Contents/Resources"
+mkdir -p "$RES_DIR"
+cp -f "$WARMUP_JSON" "$RES_DIR/warmup.json"
+
+# Ensure status template images are present in bundle Resources
+cp -f "$PROJECT_DIR/assets/warmpyStatusTemplate.png" "$RES_DIR/warmpyStatusTemplate.png"
+cp -f "$PROJECT_DIR/assets/warmpyStatusTemplate@2x.png" "$RES_DIR/warmpyStatusTemplate@2x.png"
+
+
+
+echo "Build complete: .build/dist/warmpy.app"

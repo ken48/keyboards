@@ -118,10 +118,10 @@ def main():
 
     try:
         keyboard.send_select_last_line()
-        time.sleep(0.07)
+        time.sleep(0.05)
 
         keyboard.send_copy()
-        time.sleep(0.17)
+        time.sleep(0.15)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
 
@@ -140,7 +140,7 @@ def main():
         else:
             print(f'Warning: unknown lang {lang}.', flush=True)
 
-        time.sleep(0.07)
+        time.sleep(0.05)
 
     finally:
         if original:

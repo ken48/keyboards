@@ -257,10 +257,10 @@ def normalize(select_all: bool = False, numbered_headings: bool = False):
     try:
         if select_all:
             keyboard.send_select_all()
-            time.sleep(0.07)
+            time.sleep(0.05)
 
         keyboard.send_copy()
-        time.sleep(0.17)
+        time.sleep(0.15)
 
         text = subprocess.run(['pbpaste'], capture_output=True, text=True, encoding="utf-8").stdout
         if not text.strip():
@@ -269,7 +269,7 @@ def normalize(select_all: bool = False, numbered_headings: bool = False):
         transformed = transform_text(text, numbered_headings=numbered_headings)
         subprocess.run(['pbcopy'], input=transformed, text=True, encoding="utf-8")
         keyboard.send_paste()
-        time.sleep(0.07)
+        time.sleep(0.05)
 
     finally:
         subprocess.run(['pbcopy'], input=original if had_original else '', text=True, encoding="utf-8")

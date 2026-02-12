@@ -2,7 +2,7 @@ pip:
   - pyobjc
   - pyobjc-framework-Quartz
 
-import:
+imports:
   - objc
   - Foundation
   - AppKit

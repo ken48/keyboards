@@ -1,4 +1,6 @@
-from warmpy.app import main
+def _main():
+    from warmpy.app import main
+    main()
 
 if __name__ == "__main__":
-    main()
+    _main()
