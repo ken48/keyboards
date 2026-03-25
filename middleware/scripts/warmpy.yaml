@@ -1,8 +1,8 @@
 pip:
-  - pyobjc
+  - pyobjc-framework-Cocoa
   - pyobjc-framework-Quartz
 
-imports:
+modules:
   - objc
   - Foundation
   - AppKit
